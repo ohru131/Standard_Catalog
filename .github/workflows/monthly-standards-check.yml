@@ -1,192 +1,66 @@
 name: Monthly official standards check
 
-
-
 on:
-
   schedule:
-  
     - cron: "17 2 1 * *"
-    
   workflow_dispatch:
-  
-
 
 permissions:
-
   contents: write
-  
   issues: write
-  
   pages: write
-  
   id-token: write
-  
-
 
 concurrency:
-
   group: pages
-  
   cancel-in-progress: false
-  
-
 
 jobs:
-
   check-update-and-deploy:
-  
     environment:
-    
       name: github-pages
-      
       url: ${{ steps.deployment.outputs.page_url }}
-      
     runs-on: ubuntu-latest
-    
     steps:
-    
       - uses: actions/checkout@v4
-      
       - uses: pnpm/action-setup@v4
-      
-        with:
-        
-          version: 10
-          
       - uses: actions/setup-node@v4
-      
         with:
-        
           node-version: 22
-          
           cache: pnpm
-          
       - run: pnpm install --frozen-lockfile
-      
       - id: check
-      
         run: |
-        
           set +e
-          
           pnpm check:standards | tee standards-check.log
-          
           status=${PIPESTATUS[0]}
-          
           cat standards-check.log
-          
           echo "status=${status}" >> "$GITHUB_OUTPUT"
-          
           exit 0
-          
       - name: Commit updated check dates and monitoring results
-      
         run: |
-        
           if git diff --quiet -- client/src/data/catalogue-monitor.json; then
-          
             echo "No monitoring metadata change to commit."
-            
             exit 0
-            
           fi
-          
           git config user.name "github-actions[bot]"
-          
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          
           git add client/src/data/catalogue-monitor.json
-          
           git commit -m "chore: monthly official standards check"
-          
           git push
-          
       - name: Open an issue when a source-page change or retrieval failure requires review
-      
         if: ${{ hashFiles('client/src/data/catalogue-monitor.json') != '' }}
-        
         env:
-        
           GH_TOKEN: ${{ github.token }}
-          
         run: |
-        
-          node -e 'const fs=require("fs"); const m=JSON.parse(fs.readFileSync("client/src/data/catalogue-monitor.json","utf8")); const c=(m.recentChanges||[]).filter(x=>x.detectedAt===m.lastCompletedAt); const f=Object.values(m.records||{}).filter(x=>x.lastAttemptAt===m.lastCompletedAt&&x.lastError); if(c.length||f.length){const body=["月次の公式規格確認で、原典確認が必要な結果を検出しました。版、廃止状態、Scope要約は公式規格票で確認したうえで更新してください。", c.length?"\\n## メタデータ差分":"",...c.map(x=>`- ${x.code}: ${x.source}`),f.length?"\\n## 取得できなかった公式ページ":"",...f.map(x=>`- ${x.code}: ${x.lastError} — ${x.source}`)].filter(Boolean).join("\\n"); fs.writeFileSync("issue-body.md",body)}'
-          
+          node -e 'const fs=require("fs"); const m=JSON.parse(fs.readFileSync("client/src/data/catalogue-monitor.json","utf8")); const c=(m.recentChanges||[]).filter(x=>x.detectedAt===m.lastCompletedAt); const f=Object.values(m.records||{}).filter(x=>x.lastAttemptAt===m.lastCompletedAt&&x.lastError); if(c.length||f.length){const body=["月次の公式規格確認で、原典確認が必要な結果を検出しました。版、廃止状態、Scope要約は公式規格票で確認したうえで更新してください。", c.length?"\n## メタデータ差分":"",...c.map(x=>"- "+x.code+": "+x.source),f.length?"\n## 取得できなかった公式ページ":"",...f.map(x=>"- "+x.code+": "+x.lastError+" — "+x.source)].filter(Boolean).join("\n"); fs.writeFileSync("issue-body.md",body)}'
           if [ -f issue-body.md ]; then gh issue create --title "規格ページの月次確認：要対応項目" --body-file issue-body.md --label "standards-review" || gh issue create --title "規格ページの月次確認：要対応項目" --body-file issue-body.md; fi
-          
       - run: pnpm check
-      
       - run: pnpm build
-      
         env:
-        
           VITE_BASE_PATH: /Standard_Catalog/
-          
       - uses: actions/upload-pages-artifact@v3
-      
         with:
-        
           path: dist/public
-          
       - id: deployment
-      
         uses: actions/deploy-pages@v4
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
