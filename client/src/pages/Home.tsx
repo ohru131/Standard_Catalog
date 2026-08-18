@@ -1183,7 +1183,7 @@ export default function Home() {
 
           <aside className="detail-panel" aria-label="選択中の規格詳細">
             <div className="detail-topline"><span>SELECTED STANDARD</span><span>{selected.edition}</span></div>
-            <div className="detail-code"><AuthorityPill authority={selected.authority} /><code>{selected.code}</code></div>
+            <div className="detail-code"><AuthorityPill authority={selected.authority} /><a className="detail-code-link" href={selected.source} target="_blank" rel="noreferrer" aria-label={`${selected.code}の公式個別規格ページを開く`} title="公式個別規格ページを開く"><code>{selected.code}</code><ArrowUpRight size={16} aria-hidden="true" /></a></div>
             <h2>{selected.japaneseTitle}</h2><p className="detail-english">{selected.englishTitle}</p><div className="official-scope"><p className="eyebrow">{selected.authority === "ASTM" ? "OFFICIAL SCOPE / SIGNIFICANCE · 日本語要約" : "OFFICIAL SCOPE · 日本語要約"}</p><p className="detail-summary">{officialScopeSummaries[selected.id] ?? selected.summary}</p></div>
             <div className="detail-facts"><div><span>試験領域</span><strong>{selected.category}</strong></div><div><span>制御・方法</span><strong>{selected.method}</strong></div><div><span>対象材料</span><strong>{selected.material}</strong></div><div><span>公式ページ確認日</span><strong>{formatCheckDate(selectedMonitor?.checkedAt)}{selectedMonitor?.pendingReview ? " · 要確認" : selectedMonitor?.lastError ? " · 未取得" : ""}</strong></div></div>
             <section className="same-theme" aria-labelledby="same-theme-title">
