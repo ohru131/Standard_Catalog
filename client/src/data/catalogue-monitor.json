@@ -1,0 +1,456 @@
+{
+  "schemaVersion": 1,
+  "lastCompletedAt": "2026-08-18T06:24:15.363Z",
+  "latestRun": {
+    "checked": 30,
+    "failed": 14,
+    "changed": 0
+  },
+  "records": {
+    "astm-e466": {
+      "code": "ASTM E466-21",
+      "source": "https://store.astm.org/e0466-21.html",
+      "checkedAt": "2026-08-18T06:24:15.363Z",
+      "httpStatus": 200,
+      "finalUrl": "https://store.astm.org/e0466-21.html",
+      "pageTitle": "E466 Standard Practice for Conducting Force Controlled Constant Amplitude Axial Fatigue Tests of Metallic Materials",
+      "fingerprint": "3be8a19c4aa8d45b66c2080709a2bd152510d4b73d48c0ef8792d6fde0424365",
+      "pendingReview": false,
+      "lastError": null,
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "astm-e606": {
+      "code": "ASTM E606/E606M-21",
+      "source": "https://store.astm.org/e0606_e0606m-21.html",
+      "checkedAt": "2026-08-18T06:24:15.363Z",
+      "httpStatus": 200,
+      "finalUrl": "https://store.astm.org/e0606_e0606m-21.html",
+      "pageTitle": "E606/E606M Standard Test Method for Strain-Controlled Fatigue Testing",
+      "fingerprint": "58242c5707fcb1ddc65cc03f4bd51a703392c51d5d7b9b0a5c1c15b456a5ffe4",
+      "pendingReview": false,
+      "lastError": null,
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "astm-e647": {
+      "code": "ASTM E647-24",
+      "source": "https://store.astm.org/e0647-24.html",
+      "checkedAt": "2026-08-18T06:24:15.363Z",
+      "httpStatus": 200,
+      "finalUrl": "https://store.astm.org/e0647-24.html",
+      "pageTitle": "E647 Standard Test Method for Measurement of Fatigue Crack Growth Rates",
+      "fingerprint": "1454c9cbcdc9aba24b11d5d50f7d5d0bdf3dae8bf9029cabcbfe8a4c4b54a22f",
+      "pendingReview": false,
+      "lastError": null,
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "astm-e467": {
+      "code": "ASTM E467-21",
+      "source": "https://store.astm.org/e0467-21.html",
+      "checkedAt": "2026-08-18T06:24:15.363Z",
+      "httpStatus": 200,
+      "finalUrl": "https://store.astm.org/e0467-21.html",
+      "pageTitle": "E467 Standard Practice for Verification of Constant Amplitude Dynamic Forces in an Axial Fatigue Testing System",
+      "fingerprint": "d9dcb1bf13067316b3609cffc0b1e3e18d48d43f615f126894c24b9cbb248213",
+      "pendingReview": false,
+      "lastError": null,
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "astm-e468": {
+      "code": "ASTM E468/E468M-23a",
+      "source": "https://store.astm.org/e0468_e0468m-23a.html",
+      "checkedAt": "2026-08-18T06:24:15.363Z",
+      "httpStatus": 200,
+      "finalUrl": "https://store.astm.org/e0468_e0468m-23a.html",
+      "pageTitle": "E468/E468M Standard Practice for Presentation of Constant Amplitude Fatigue Test Results for Metallic Materials",
+      "fingerprint": "e0aca6cd1c5983c5c6c3ea4be17df86360ada9a48d5668335ef488b81acb01eb",
+      "pendingReview": false,
+      "lastError": null,
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "astm-e2207": {
+      "code": "ASTM E2207-15(2021)",
+      "source": "https://store.astm.org/e2207-15r21.html",
+      "checkedAt": "2026-08-18T06:24:15.363Z",
+      "httpStatus": 200,
+      "finalUrl": "https://store.astm.org/e2207-15r21.html",
+      "pageTitle": "E2207 Standard Practice for Strain-Controlled Axial-Torsional Fatigue Testing with Thin-Walled Tubular Specimens",
+      "fingerprint": "e70633c21c4ac79efb46abd61b1db4d4b18f0460200530b9cd06b937c0bb987b",
+      "pendingReview": false,
+      "lastError": null,
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "astm-e2948": {
+      "code": "ASTM E2948-24",
+      "source": "https://store.astm.org/e2948-24.html",
+      "checkedAt": "2026-08-18T06:24:15.363Z",
+      "httpStatus": 200,
+      "finalUrl": "https://store.astm.org/e2948-24.html",
+      "pageTitle": "E2948 Standard Test Method for Conducting Rotating Bending Fatigue Tests of Solid Round Fine Wire",
+      "fingerprint": "86fc9c5b7f6e5dcf3f4696d1cb972f0f66754ea54bfb9aefadbc4daa1318537b",
+      "pendingReview": false,
+      "lastError": null,
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "astm-e2368": {
+      "code": "ASTM E2368-25",
+      "source": "https://store.astm.org/e2368-25.html",
+      "checkedAt": "2026-08-18T06:24:15.363Z",
+      "httpStatus": 200,
+      "finalUrl": "https://store.astm.org/e2368-25.html",
+      "pageTitle": "E2368 Standard Practice for Strain Controlled Thermomechanical Fatigue Testing",
+      "fingerprint": "3c696af3b7d9df6f9a3893e93f84949021e8d4b03f588c1dae8f442abe51b2ad",
+      "pendingReview": false,
+      "lastError": null,
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "iso-1099": {
+      "code": "ISO 1099:2017",
+      "source": "https://www.iso.org/standard/67847.html",
+      "lastError": "HTTP 403",
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "iso-12106": {
+      "code": "ISO 12106:2017",
+      "source": "https://www.iso.org/standard/64687.html",
+      "lastError": "HTTP 403",
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "iso-1143": {
+      "code": "ISO 1143:2021",
+      "source": "https://www.iso.org/standard/79575.html",
+      "lastError": "HTTP 403",
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "iso-12111": {
+      "code": "ISO 12111:2011",
+      "source": "https://www.iso.org/standard/45583.html",
+      "lastError": "HTTP 403",
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "jis-z2289": {
+      "code": "JIS Z 2289:2026",
+      "source": "https://webdesk.jsa.or.jp/books/W11M0090/?bunsyo_id=JIS%20Z%202289:2026",
+      "checkedAt": "2026-08-18T06:24:15.363Z",
+      "httpStatus": 200,
+      "finalUrl": "https://webdesk.jsa.or.jp/books/W11M0090/?bunsyo_id=JIS%20Z%202289:2026",
+      "pageTitle": "JIS Z 2289:2026 金属材料の軸力制御疲労試験方法 | 日本規格協会",
+      "fingerprint": "e6186bbcb6c94f538cef2b8f33f59c2629ba45ab332569661533450d40d05040",
+      "pendingReview": false,
+      "lastError": null,
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "jis-z2274": {
+      "code": "JIS Z 2274:2024",
+      "source": "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+Z+2274%3A2024",
+      "checkedAt": "2026-08-18T06:24:15.363Z",
+      "httpStatus": 200,
+      "finalUrl": "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+Z+2274%3A2024",
+      "pageTitle": "JIS Z 2274:2024 金属材料の回転曲げ疲労試験方法 | 日本規格協会",
+      "fingerprint": "e904bf83351569f6239f6a6269c8aec395d993666748c3f7d0655cb56765f8da",
+      "pendingReview": false,
+      "lastError": null,
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "jis-z2279": {
+      "code": "JIS Z 2279:1992",
+      "source": "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+Z+2279%3A1992",
+      "checkedAt": "2026-08-18T06:24:15.363Z",
+      "httpStatus": 200,
+      "finalUrl": "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+Z+2279%3A1992",
+      "pageTitle": "JIS Z 2279:1992 金属材料の高温低サイクル疲労試験方法 | 日本規格協会",
+      "fingerprint": "2c0b694fce9a13f8f5d1d05482b51fb10cad085ec8d2e1b0d39117a81ef5d72c",
+      "pendingReview": false,
+      "lastError": null,
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "astm-e1876": {
+      "code": "ASTM E1876-22",
+      "source": "https://store.astm.org/e1876-22.html",
+      "checkedAt": "2026-08-18T06:24:15.363Z",
+      "httpStatus": 200,
+      "finalUrl": "https://store.astm.org/e1876-22.html",
+      "pageTitle": "E1876 Standard Test Method for Dynamic Young's Modulus, Shear Modulus, and Poisson's Ratio by Impulse Excitation of Vibration",
+      "fingerprint": "963bf560291cbaa91bd79bc6d2526df539157a69acc037ddf95cb11963847591",
+      "pendingReview": false,
+      "lastError": null,
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "astm-e756": {
+      "code": "ASTM E756-05(2017)",
+      "source": "https://www.astm.org/e0756-05r17.html",
+      "lastError": "HTTP 403",
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "astm-d4065": {
+      "code": "ASTM D4065-20",
+      "source": "https://store.astm.org/d4065-20.html",
+      "checkedAt": "2026-08-18T06:24:15.363Z",
+      "httpStatus": 200,
+      "finalUrl": "https://store.astm.org/d4065-20.html",
+      "pageTitle": "D4065 Standard Practice for Plastics: Dynamic Mechanical Properties: Determination and Report of Procedures",
+      "fingerprint": "d809d0a297338db7db4e66a1d50751d71b836fdcc4fcfbd759cf55b99975a961",
+      "pendingReview": false,
+      "lastError": null,
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "iso-6721-1": {
+      "code": "ISO 6721-1:2019",
+      "source": "https://www.iso.org/standard/73142.html",
+      "lastError": "HTTP 403",
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "iso-6721-2": {
+      "code": "ISO 6721-2:2019",
+      "source": "https://www.iso.org/standard/73143.html",
+      "lastError": "HTTP 403",
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "jis-k7244-1": {
+      "code": "JIS K 7244-1:1998",
+      "source": "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+K+7244-1%3A1998",
+      "checkedAt": "2026-08-18T06:24:15.363Z",
+      "httpStatus": 200,
+      "finalUrl": "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+K+7244-1%3A1998",
+      "pageTitle": "JIS K 7244-1:1998 プラスチック―動的機械特性の試験方法―第１部：通則 | 日本規格協会",
+      "fingerprint": "d3e0342808e84f4847a56dd8dcc4f2052e8f934c73633524d795c7e2b8355cbe",
+      "pendingReview": false,
+      "lastError": null,
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "jis-k7244-2": {
+      "code": "JIS K 7244-2:1998",
+      "source": "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+K+7244-2%3A1998",
+      "checkedAt": "2026-08-18T06:24:15.363Z",
+      "httpStatus": 200,
+      "finalUrl": "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+K+7244-2%3A1998",
+      "pageTitle": "JIS K 7244-2:1998 プラスチック―動的機械特性の試験方法―第２部：ねじり振子法 | 日本規格協会",
+      "fingerprint": "10bde74d782e17c47971739351ac9d9de94512a26aa1b568a7bf67e6a569f491",
+      "pendingReview": false,
+      "lastError": null,
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "jis-k7244-4": {
+      "code": "JIS K 7244-4:1999",
+      "source": "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+K+7244-4%3A1999",
+      "checkedAt": "2026-08-18T06:24:15.363Z",
+      "httpStatus": 200,
+      "finalUrl": "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+K+7244-4%3A1999",
+      "pageTitle": "JIS K 7244-4:1999 プラスチック―動的機械特性の試験方法―第４部：引張振動―非共振法 | 日本規格協会",
+      "fingerprint": "5532222289cb35f6ed5475eff779f763e7f2af467042e1d9d98df1ddd2074562",
+      "pendingReview": false,
+      "lastError": null,
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "iso-12108": {
+      "code": "ISO 12108:2018",
+      "source": "https://www.iso.org/standard/73809.html",
+      "lastError": "HTTP 403",
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "iso-12110-1": {
+      "code": "ISO 12110-1:2013",
+      "source": "https://www.iso.org/standard/54712.html",
+      "lastError": "HTTP 403",
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "iso-12110-2": {
+      "code": "ISO 12110-2:2013",
+      "source": "https://www.iso.org/standard/54713.html",
+      "lastError": "HTTP 403",
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "iso-22407": {
+      "code": "ISO 22407:2021",
+      "source": "https://www.iso.org/standard/73126.html",
+      "lastError": "HTTP 403",
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "iso-23296": {
+      "code": "ISO 23296:2025",
+      "source": "https://www.iso.org/standard/85732.html",
+      "lastError": "HTTP 403",
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "astm-d7791": {
+      "code": "ASTM D7791-22",
+      "source": "https://store.astm.org/d7791-22.html",
+      "checkedAt": "2026-08-18T06:24:15.363Z",
+      "httpStatus": 200,
+      "finalUrl": "https://store.astm.org/d7791-22.html",
+      "pageTitle": "D7791 Standard Test Method for Uniaxial Fatigue Properties of Plastics",
+      "fingerprint": "5b1a79af76cac755ac55748aa9fa39647442820e7fa51bf7e09deb3a9f0a1863",
+      "pendingReview": false,
+      "lastError": null,
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "astm-d4482": {
+      "code": "ASTM D4482-11(2021)",
+      "source": "https://store.astm.org/d4482-11r21.html",
+      "checkedAt": "2026-08-18T06:24:15.363Z",
+      "httpStatus": 200,
+      "finalUrl": "https://store.astm.org/d4482-11r21.html",
+      "pageTitle": "D4482 Standard Test Method for Rubber Property—Extension Cycling Fatigue",
+      "fingerprint": "0ba0c1a745221d83e478f2d73a5756ccad1e66e8f00aef9cdbc86373f221fca4",
+      "pendingReview": false,
+      "lastError": null,
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "astm-f2345": {
+      "code": "ASTM F2345-21",
+      "source": "https://store.astm.org/f2345-21.html",
+      "checkedAt": "2026-08-18T06:24:15.363Z",
+      "httpStatus": 200,
+      "finalUrl": "https://store.astm.org/f2345-21.html",
+      "pageTitle": "F2345 Standard Test Methods for Determination of Cyclic Fatigue Strength of Ceramic Modular Femoral Heads",
+      "fingerprint": "a615f6f11450378926ad02b8d382336460be9046f41d3c9fc5859898581e3c59",
+      "pendingReview": false,
+      "lastError": null,
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "jis-k6270": {
+      "code": "JIS K 6270:2018",
+      "source": "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+K+6270%3A2018",
+      "checkedAt": "2026-08-18T06:24:15.363Z",
+      "httpStatus": 200,
+      "finalUrl": "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+K+6270%3A2018",
+      "pageTitle": "JIS K 6270:2018 加硫ゴム及び熱可塑性ゴム―引張疲労特性の求め方（定ひずみ方法） | 日本規格協会",
+      "fingerprint": "3085377d9363048523fcf854b992cbe5dd2192105721b621e9e5239ca018029f",
+      "pendingReview": false,
+      "lastError": null,
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "jis-k6394": {
+      "code": "JIS K 6394:2007",
+      "source": "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+K+6394%3A2007",
+      "checkedAt": "2026-08-18T06:24:15.363Z",
+      "httpStatus": 200,
+      "finalUrl": "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+K+6394%3A2007",
+      "pageTitle": "JIS K 6394:2007 加硫ゴム及び熱可塑性ゴム―動的性質の求め方―一般指針 | 日本規格協会",
+      "fingerprint": "5601b4180044e3b929d18ce4ee33f7e3b1f760c5bd7a4066024f97f93d87e1a8",
+      "pendingReview": false,
+      "lastError": null,
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "jis-r1621": {
+      "code": "JIS R 1621:2008",
+      "source": "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+R+1621%3A2008",
+      "checkedAt": "2026-08-18T06:24:15.363Z",
+      "httpStatus": 200,
+      "finalUrl": "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+R+1621%3A2008",
+      "pageTitle": "JIS R 1621:2008 ファインセラミックスの室温曲げ疲労試験方法 | 日本規格協会",
+      "fingerprint": "fb819f597e2e8284ad530b16465af57f9a8bbaa8ca44a7f4eea11e7caaa48a4c",
+      "pendingReview": false,
+      "lastError": null,
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "jis-t0309": {
+      "code": "JIS T 0309:2009",
+      "source": "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+T+0309%3A2009",
+      "checkedAt": "2026-08-18T06:24:15.363Z",
+      "httpStatus": 200,
+      "finalUrl": "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+T+0309%3A2009",
+      "pageTitle": "JIS T 0309:2009 金属系生体材料の疲労試験方法 | 日本規格協会",
+      "fingerprint": "2388463aa077c3dbc6fffae9a38c77864ddf5509859cab5ba290ac9d29c43232",
+      "pendingReview": false,
+      "lastError": null,
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "jis-t0310": {
+      "code": "JIS T 0310:2009",
+      "source": "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+T+0310%3A2009",
+      "checkedAt": "2026-08-18T06:24:15.363Z",
+      "httpStatus": 200,
+      "finalUrl": "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+T+0310%3A2009",
+      "pageTitle": "JIS T 0310:2009 金属系生体材料の切欠き効果及び疲労き裂進展特性の試験方法 | 日本規格協会",
+      "fingerprint": "b21e83648c59473ce0a897cf8aa7c6b4d6bebd027dee4ba83851206208219522",
+      "pendingReview": false,
+      "lastError": null,
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "astm-e1820": {
+      "code": "ASTM E1820-25",
+      "source": "https://store.astm.org/e1820-25.html",
+      "checkedAt": "2026-08-18T06:24:15.363Z",
+      "httpStatus": 200,
+      "finalUrl": "https://store.astm.org/e1820-25.html",
+      "pageTitle": "E1820 Standard Test Method for Measurement of Fracture Toughness",
+      "fingerprint": "0a583360a793c84ababe8f59bd1fddd48bf30b272360780a701f7bb7a153880f",
+      "pendingReview": false,
+      "lastError": null,
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "astm-e399": {
+      "code": "ASTM E399-24",
+      "source": "https://store.astm.org/e0399-24.html",
+      "checkedAt": "2026-08-18T06:24:15.363Z",
+      "httpStatus": 200,
+      "finalUrl": "https://store.astm.org/e0399-24.html",
+      "pageTitle": "E399 Standard Test Method for Linear-Elastic Plane-Strain Fracture Toughness of Metallic Materials",
+      "fingerprint": "cffbb298b66f69b4db798d942bb9eb445f61b40c69b220d250d00910366b5932",
+      "pendingReview": false,
+      "lastError": null,
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "astm-e1921": {
+      "code": "ASTM E1921-25A",
+      "source": "https://store.astm.org/e1921-25a.html",
+      "checkedAt": "2026-08-18T06:24:15.363Z",
+      "httpStatus": 200,
+      "finalUrl": "https://store.astm.org/e1921-25a.html",
+      "pageTitle": "E1921 Standard Test Method for Determination of Reference Temperature, T0, for Ferritic Steels in the Transition Range",
+      "fingerprint": "853c19da23e44cd8d81f0b3ca48513e1af049feeff476b3bcfbbcd7b416cb9e2",
+      "pendingReview": false,
+      "lastError": null,
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "iso-12135": {
+      "code": "ISO 12135:2021",
+      "source": "https://www.iso.org/standard/78208.html",
+      "lastError": "HTTP 403",
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "iso-15653": {
+      "code": "ISO 15653:2018",
+      "source": "https://www.iso.org/standard/70865.html",
+      "lastError": "HTTP 403",
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "astm-c1421": {
+      "code": "ASTM C1421-18(2025)",
+      "source": "https://store.astm.org/c1421-18r25.html",
+      "checkedAt": "2026-08-18T06:24:15.363Z",
+      "httpStatus": 200,
+      "finalUrl": "https://store.astm.org/c1421-18r25.html",
+      "pageTitle": "C1421 Standard Test Methods for Determination of Fracture Toughness of Advanced Ceramics at Ambient Temperature",
+      "fingerprint": "994083d7250345ed975e9c1282c596fb660f6a64c46eb7d8c23f626eb4bd77fe",
+      "pendingReview": false,
+      "lastError": null,
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "astm-d5045": {
+      "code": "ASTM D5045-14(2022)",
+      "source": "https://store.astm.org/d5045-14r22.html",
+      "checkedAt": "2026-08-18T06:24:15.363Z",
+      "httpStatus": 200,
+      "finalUrl": "https://store.astm.org/d5045-14r22.html",
+      "pageTitle": "D5045 Standard Test Methods for Plane-Strain Fracture Toughness and Strain Energy Release Rate of Plastic Materials",
+      "fingerprint": "2c389428b380569b081ea1f3db86f1c1f93347faff403494b63872e87ce85500",
+      "pendingReview": false,
+      "lastError": null,
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    },
+    "jis-r1607": {
+      "code": "JIS R 1607:2015",
+      "source": "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+R+1607%3A2015",
+      "checkedAt": "2026-08-18T06:24:15.363Z",
+      "httpStatus": 200,
+      "finalUrl": "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+R+1607%3A2015",
+      "pageTitle": "JIS R 1607:2015 ファインセラミックスの室温破壊じん（靱）性試験方法 | 日本規格協会",
+      "fingerprint": "9b4f050b1b2773bfab6c07a260d2850f66febf7f3dc322e4facfe1d927105ecd",
+      "pendingReview": false,
+      "lastError": null,
+      "lastAttemptAt": "2026-08-18T06:24:15.363Z"
+    }
+  },
+  "recentChanges": []
+}
