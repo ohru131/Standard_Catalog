@@ -32,25 +32,11 @@
 
 @layer components {
   .catalogue-shell { min-height: 100vh; background: linear-gradient(90deg, #efede6 0, #f7f4ed 26%, #f7f4ed 100%); }
-  .catalogue-main { position: relative; width: min(100%, 1480px); margin: 0 auto; border-right: 1px solid #d5d1c7; border-left: 1px solid #d5d1c7; background: #f7f4ed; }
-  .catalogue-main::before { position: absolute; z-index: 4; top: 0; bottom: 0; left: 20px; width: 1px; content: ""; background: repeating-linear-gradient(to bottom, #0b4aa2 0 22px, #bfc7c1 22px 23px, transparent 23px 66px); opacity: .52; pointer-events: none; }
-  .catalogue-header { position: relative; display: flex; min-height: 88px; align-items: center; justify-content: space-between; gap: 28px; border-bottom: 1px solid #cbc8be; padding: 17px clamp(24px, 4vw, 62px); }
-  .catalogue-brand { display: flex; align-items: center; gap: 14px; }
-  .catalogue-brand .specimen-mark { width: 50px; height: 50px; flex: 0 0 auto; }
-  .catalogue-brand div { display: grid; gap: 4px; }
-  .catalogue-brand::after { align-self: stretch; border-left: 1px solid #c8c8c0; color: #0b4aa2; content: "F/I · 00"; font-family: "IBM Plex Mono", monospace; font-size: 8px; letter-spacing: .08em; margin-left: 2px; padding: 3px 0 0 10px; }
-  .catalogue-brand span { color: #263c4e; font-family: "DM Sans", "Noto Sans JP", sans-serif; font-size: 19px; font-weight: 700; letter-spacing: .08em; line-height: 1; }
-  .catalogue-brand small { color: #65706e; font-family: "IBM Plex Mono", monospace; font-size: 10px; letter-spacing: .12em; }
-  .catalogue-status { display: flex; align-items: center; gap: 9px; color: #67706d; font-size: 13px; line-height: 1.6; }
-  .catalogue-status small { border-left: 1px solid #c8c8c0; color: #73807d; font-family: "IBM Plex Mono", monospace; font-size: 10px; letter-spacing: .03em; margin-left: 4px; padding-left: 12px; }
-  .catalogue-status span { width: 8px; height: 8px; border: 1px solid #0b4aa2; border-radius: 50%; }
-  .catalogue-intro-section { position: relative; border-bottom: 1px solid #cbc8be; padding: 38px clamp(24px, 4vw, 62px) 33px; }
-  .catalogue-intro-section::before, .catalogue-results::before { position: absolute; top: 0; bottom: 0; left: 21px; width: 1px; content: ""; background: linear-gradient(#0b4aa2 0 46px, #c4c8c0 46px 100%); opacity: .8; }
-  .catalogue-heading { display: grid; grid-template-columns: 38px minmax(0, auto) minmax(250px, 510px); gap: 16px; align-items: end; }
-  .catalogue-heading > span { color: #0b4aa2; font-family: "IBM Plex Mono", monospace; font-size: 13px; line-height: 1.8; }
+  .catalogue-main { position: relative; width: min(100%, 1480px); margin: 0 auto; background: #f7f4ed; }
+  .catalogue-intro-section { position: relative; border-bottom: 1px solid #cbc8be; padding: 34px clamp(24px, 4vw, 62px) 33px; }
+  .catalogue-heading { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
   .eyebrow { color: #607073; font-family: "IBM Plex Mono", monospace; font-size: 11px; font-weight: 500; letter-spacing: .12em; line-height: 1.5; }
-  .catalogue-heading h1 { margin: 4px 0 0; color: #202b2e; font-family: "DM Sans", "Noto Sans JP", sans-serif; font-size: clamp(38px, 4.2vw, 55px); font-weight: 600; letter-spacing: -.055em; line-height: 1.08; }
-  .catalogue-heading > p { max-width: 500px; margin: 0 0 5px; color: #5f6866; font-size: 15px; line-height: 1.85; }
+  .catalogue-heading h1 { margin: 0; max-width: 100%; color: #202b2e; font-family: "DM Sans", "Noto Sans JP", sans-serif; font-size: clamp(38px, 4.2vw, 55px); font-weight: 600; letter-spacing: -.055em; line-height: 1.08; overflow-wrap: normal; white-space: nowrap; word-break: keep-all; }
   .search-surface { position: relative; display: flex; height: 72px; align-items: center; margin-top: 30px; border: 1px solid #aeb9bd; background: #fffdf8; box-shadow: 7px 7px 0 #e4e0d7; transition: border-color 180ms cubic-bezier(.23,1,.32,1), box-shadow 180ms cubic-bezier(.23,1,.32,1); }
   .search-surface:focus-within { border-color: #0b4aa2; box-shadow: 9px 9px 0 #d8e2f0; }
   .search-icon { margin-left: 23px; color: #0b4aa2; }
@@ -77,12 +63,12 @@
   .switch-control input:checked + .switch-track { border-color: #0b4aa2; background: #dce8f6; }
   .switch-control input:checked + .switch-track span { transform: translateX(13px); background: #0b4aa2; }
   .catalogue-results { position: relative; display: grid; grid-template-columns: minmax(0, 1.42fr) minmax(410px, .88fr); }
-  .results-panel { min-width: 0; padding: 34px clamp(26px, 3.8vw, 58px) 62px clamp(35px, 4vw, 70px); }
+  .results-panel { min-width: 0; padding: 34px clamp(26px, 3.8vw, 58px) 62px; }
   .results-heading { display: flex; align-items: center; justify-content: space-between; padding-bottom: 18px; }
-  .results-heading::after { order: -1; align-self: stretch; border-left: 2px solid #0b4aa2; color: #69808a; content: "F/I · 01"; font-family: "IBM Plex Mono", monospace; font-size: 8px; letter-spacing: .09em; margin-right: 12px; padding: 3px 0 0 7px; }
   .results-heading > div { margin-right: auto; }
   .results-heading > div { color: #5c6765; font-family: "IBM Plex Mono", monospace; font-size: 13px; }
   .result-number { margin-right: 6px; color: #0b4aa2; font-family: "DM Sans", sans-serif; font-size: 31px; font-weight: 600; }
+  .data-update-status { display: inline-block; margin-left: 18px; color: #73807d; font-size: 10px; letter-spacing: .03em; white-space: nowrap; }
   .reset-button { display: flex; align-items: center; gap: 6px; border: 0; background: transparent; color: #576562; font-size: 13px; text-decoration: underline; text-underline-offset: 4px; }
   .standard-list { border-top: 1px solid #aab5b1; }
   .standard-row { display: grid; width: 100%; grid-template-columns: 31px minmax(0, 1fr) auto 23px; gap: 16px; align-items: center; border: 0; border-bottom: 1px solid #d1d1cb; background: transparent; padding: 21px 6px 20px 0; text-align: left; transition: background 180ms cubic-bezier(.23,1,.32,1), padding 180ms cubic-bezier(.23,1,.32,1); }
@@ -156,11 +142,8 @@
   @media (min-width: 791px) {
     .catalogue-shell { height: 100vh; overflow: hidden; }
     .catalogue-main { display: flex; height: 100vh; flex-direction: column; overflow: hidden; }
-    .catalogue-header { min-height: 68px; padding-top: 10px; padding-bottom: 10px; }
-    .catalogue-brand .specimen-mark { width: 42px; height: 42px; }
     .catalogue-intro-section { flex: 0 0 auto; padding-top: 20px; padding-bottom: 18px; }
     .catalogue-heading h1 { font-size: clamp(36px, 3.2vw, 46px); }
-    .catalogue-heading > p { font-size: 14px; }
     .search-surface { height: 60px; margin-top: 17px; }
     .filters { gap: 10px 18px; margin-top: 17px; }
     .catalogue-filters { padding-top: 12px; }
@@ -207,8 +190,6 @@
   @media (max-width: 1050px) {
     .catalogue-results { grid-template-columns: minmax(0, 1fr) 390px; }
     .row-tags { display: none; }
-    .catalogue-heading { grid-template-columns: 30px minmax(0, 1fr); }
-    .catalogue-heading > p { grid-column: 2; max-width: 680px; margin-top: 6px; }
   }
   @media (min-width: 791px) and (max-width: 1199px) {
     .catalogue-results { grid-template-columns: minmax(270px, .55fr) minmax(0, 1.45fr); }
@@ -229,18 +210,8 @@
     .same-theme-list strong { font-size: 14px; }
   }
   @media (max-width: 790px) {
-    .catalogue-header { min-height: 58px; padding: 9px 18px; }
-    .catalogue-brand { gap: 10px; }
-    .catalogue-brand .specimen-mark { width: 34px; height: 34px; }
-    .catalogue-brand span { font-size: 14px; }
-    .catalogue-brand small { font-size: 8px; }
-    .catalogue-brand::after, .results-heading::after { display: none; }
-    .catalogue-main::before { left: 8px; }
-    .catalogue-status { display: none; }
     .catalogue-intro-section { padding: 18px 18px 15px; }
-    .catalogue-intro-section::before, .catalogue-results::before { left: 8px; }
-    .catalogue-heading { grid-template-columns: 27px minmax(0, 1fr); gap: 10px; }
-    .catalogue-heading > p { display: none; }
+    .catalogue-heading { grid-template-columns: minmax(0, 1fr); gap: 10px; }
     .catalogue-heading h1 { font-size: 33px; }
     .search-surface { height: 55px; margin-top: 15px; box-shadow: 5px 5px 0 #e4e0d7; }
     .search-icon { margin-left: 15px; }
@@ -262,6 +233,7 @@
     .catalogue-results { grid-template-columns: 1fr; }
     .catalogue-results.mobile-detail .results-panel, .catalogue-results.mobile-list .detail-panel { display: none; }
     .results-panel { padding: 27px 18px 38px; }
+    .data-update-status { display: block; margin: 5px 0 0; font-size: 9px; }
     .detail-panel { position: relative; min-height: auto; border-top: 0; border-left: 0; padding: 26px 21px 38px; }
     .detail-panel h2 { font-size: 29px; }
   }

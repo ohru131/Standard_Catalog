@@ -1099,10 +1099,6 @@ function AuthorityPill({ authority }: { authority: Authority }) {
   return <span className={`authority-pill ${authorityStyles[authority]}`}>{authority}</span>;
 }
 
-function SpecimenMark() {
-  return <svg className="specimen-mark" viewBox="0 0 56 56" role="img" aria-label="Fatigue Indexのシンボル"><path d="M28 3 48 14v28L28 53 8 42V14L28 3Z" fill="#f7f4ed" stroke="#0b4aa2" strokeWidth="2" /><path d="M27.8 11.5c-6.1 0-9.6 4.7-8.8 10.1.6 3.8 4.3 5.4 4.3 9.2 0 2.4-1.6 4.7-4.2 6.6 2.8 3.4 5.7 5.5 8.7 7.2 3.1-1.8 6-4 8.8-7.3-2.7-1.9-4.2-4.2-4.2-6.6 0-3.8 3.6-5.4 4.2-9.2.8-5.4-2.6-10-8.8-10Z" fill="none" stroke="#263c4e" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" /><path d="M28 15v26M22.4 22.2h11.2M21.5 35h13" stroke="#0b4aa2" strokeWidth="1.4" strokeLinecap="round" /></svg>;
-}
-
 export default function Home() {
   const [query, setQuery] = useState("");
   const [authority, setAuthority] = useState<Authority | "すべて">("すべて");
@@ -1159,13 +1155,8 @@ export default function Home() {
   return (
     <div className="catalogue-shell">
       <main className="catalogue-main">
-        <header className="catalogue-header">
-          <div className="catalogue-brand"><SpecimenMark /><div><span>FATIGUE / INDEX</span><small>STANDARDS CATALOGUE</small></div></div>
-          <div className="catalogue-status"><span /> 規格本文ではなく、探索のための参照目録です。<small>監視実行：{formatCheckDate(catalogueMonitor.lastCompletedAt)} · {catalogueMonitor.latestRun?.checked ?? 0}/{standards.length}件確認{catalogueMonitor.latestRun?.failed ? ` · ${catalogueMonitor.latestRun.failed}件未取得` : ""}</small></div>
-        </header>
-
         <section className="catalogue-intro-section" aria-labelledby="catalogue-title">
-          <div className="catalogue-heading"><span>01</span><div><p className="eyebrow">STANDARD CATALOGUE</p><h1 id="catalogue-title">規格目録</h1></div><p>ASTM・ISO・JISの疲労、動的試験、動特性を、規格番号・試験方法・材料から絞り込みます。</p></div>
+          <div className="catalogue-heading"><p className="eyebrow">STANDARD CATALOGUE</p><h1 id="catalogue-title">規格目録</h1></div>
           <div className="search-surface">
             <Search className="search-icon" size={23} aria-hidden="true" />
             <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="例：ISO 1099、動的粘弾性、金属材料、制振" aria-label="規格を検索" />
@@ -1184,7 +1175,7 @@ export default function Home() {
         <div className="mobile-view-switch" aria-label="規格表示の切替"><button className={mobileView === "list" ? "selected" : ""} onClick={() => setMobileView("list")}>規格一覧 <span>{filteredStandards.length}</span></button><button className={mobileView === "detail" ? "selected" : ""} onClick={() => setMobileView("detail")}>選択中の規格内容</button></div>
         <section className={`catalogue-results mobile-${mobileView}`} aria-label="検索結果と規格詳細">
           <div className="results-panel">
-            <div className="results-heading"><div><span className="result-number">{String(filteredStandards.length).padStart(2, "0")}</span><span> 件の規格</span></div>{(query || authority !== "すべて" || category !== "すべて" || materialFilter !== "すべて" || hasJis) && <button onClick={clearFilters} className="reset-button"><X size={17} /> 条件を解除</button>}</div>
+          <div className="results-heading"><div><span className="result-number">{String(filteredStandards.length).padStart(2, "0")}</span><span> 件の規格</span><span className="data-update-status">データ自動更新日：{formatCheckDate(catalogueMonitor.lastCompletedAt)} · {catalogueMonitor.latestRun?.checked ?? 0}/{standards.length}件</span></div>{(query || authority !== "すべて" || category !== "すべて" || materialFilter !== "すべて" || hasJis) && <button onClick={clearFilters} className="reset-button"><X size={17} /> 条件を解除</button>}</div>
             <div className="standard-list">
               {filteredStandards.length > 0 ? filteredStandards.map((standard, index) => <button key={standard.id} className={`standard-row ${selected.id === standard.id ? "selected" : ""}`} onClick={() => { setSelectedId(standard.id); setMobileView("detail"); }}><div className="row-index">{String(index + 1).padStart(2, "0")}</div><div className="row-main"><div className="row-code"><AuthorityPill authority={standard.authority} /><span>{standard.code}</span>{standard.status === "new" && <b>NEW</b>}</div><h3>{standard.japaneseTitle}</h3><p>{standard.englishTitle}</p></div><div className="row-tags"><span>{standard.category}</span><span>{standard.material}</span></div><ChevronRight className="row-arrow" size={22} /></button>) : <div className="empty-state"><FlaskConical size={30} /><h3>一致する規格がありません。</h3><p>別の規格番号、試験方法、材料、または広い試験領域で再検索してください。</p><button onClick={clearFilters}>すべての規格を見る</button></div>}
             </div>
