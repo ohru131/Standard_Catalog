@@ -33,6 +33,18 @@ GitHub Actionsの `Monthly official standards check` は、各規格の公式個
 
 手動で確認する場合は、GitHubの **Actions** から **Monthly official standards check** を選び、**Run workflow** を実行してください。詳細は [GITHUB_PAGES.md](./GITHUB_PAGES.md) を参照してください。
 
+## CI/CD
+
+GitHub Actionsにより、変更内容の検証、GitHub Pagesへの公開、月次の公式確認を分離して実行します。
+
+| ワークフロー | 実行契機 | 処理内容 |
+|---|---|---|
+| `Validate portal` | `main` 宛てのプルリクエスト、手動実行 | 型検査とGitHub Pages用ビルドを実行し、公開前の変更を検証 |
+| `Deploy static site to GitHub Pages` | `main` へのpush、手動実行 | 型検査・静的ビルド後にGitHub Pagesへ公開 |
+| `Monthly official standards check` | 毎月1日 02:17 UTC、手動実行 | 公式確認、確認日更新、要確認Issue作成、Pages再公開 |
+
+> `Monthly official standards check` は差分を自動で本文へ反映しません。公式記録に変化があった場合は、GitHub Issueで確認対象として通知します。
+
 ## ローカルで実行する
 
 Node.js 20以上とpnpmを用意して、次のコマンドを実行します。
@@ -65,6 +77,7 @@ pnpm check:standards
 | `client/src/pages/Home.tsx` | 規格目録、検索・絞り込み、規格詳細の画面実装 |
 | `client/src/data/catalogue-monitor.json` | 月次確認の実行日、確認結果、要確認状態 |
 | `scripts/check-standards.mjs` | 公式規格ページ・公式メタデータの確認処理 |
+| `.github/workflows/ci.yml` | プルリクエストの型検査・GitHub Pages用ビルド |
 | `.github/workflows/deploy-pages.yml` | GitHub Pagesへの静的サイト公開 |
 | `.github/workflows/monthly-standards-check.yml` | 月次の公式確認、差分Issue、再公開 |
 | `GITHUB_PAGES.md` | GitHub Pagesおよび月次確認の運用メモ |

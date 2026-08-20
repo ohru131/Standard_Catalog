@@ -151,4 +151,10 @@
 ## GitHub README
 
 - [x] Standard_Catalogのトップページ向けに、目的・機能・公開URL・月次更新・ローカル実行方法をまとめたREADME.mdを作成する。
-- [ ] README.mdをmainブランチへ反映し、GitHubのリポジトリトップで表示を確認する。
+- [x] README.mdをmainブランチへ反映し、GitHubのリポジトリトップで表示を確認する。
+
+## GitHub Actions CI/CD
+
+- [ ] 既存のPages公開・月次規格確認ワークフローを確認し、継続的インテグレーション用の検証設定を追加する。
+- [ ] 自動更新の実行契機、権限、差分Issue、Pages再公開の流れをCI/CD設定として明確化する。
+- [ ] GitHub Actions設定をmainブランチへ反映し、実行結果を確認する。
