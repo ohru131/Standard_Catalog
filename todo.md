@@ -145,5 +145,10 @@
 
 ## GitHub反映（規格番号リンク）
 
-- [ ] 規格番号から公式個別ページを開く変更をStandard_Catalogのmainブランチへ反映する。
-- [ ] GitHub Pagesの再公開成功を確認する。
+- [x] 規格番号から公式個別ページを開く変更をStandard_Catalogのmainブランチへ反映する。
+- [x] GitHub Pagesの再公開成功を確認する。
+
+## GitHub README
+
+- [x] Standard_Catalogのトップページ向けに、目的・機能・公開URL・月次更新・ローカル実行方法をまとめたREADME.mdを作成する。
+- [ ] README.mdをmainブランチへ反映し、GitHubのリポジトリトップで表示を確認する。
