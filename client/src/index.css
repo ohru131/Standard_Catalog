@@ -137,6 +137,47 @@
   .test-guide-caution { margin-top: 14px; border-left: 2px solid #9ba9a8; padding-left: 9px; color: #62706d; font-size: 12px; line-height: 1.8; }
   .source-link { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 27px; border-top: 1px solid #b9bfba; border-bottom: 1px solid #b9bfba; padding: 12px 0; color: #0f5080; font-size: 13px; text-decoration: none; }
   .source-link:hover { color: #0b4aa2; }
+  .technical-reading, .specimen-figure, .reference-list { max-width: 900px; margin-top: 27px; border-top: 1px solid #b8c1bd; border-bottom: 1px solid #b8c1bd; padding: 16px 0 18px; }
+  .technical-reading-heading, .specimen-figure-heading, .reference-list-heading { display: flex; align-items: end; justify-content: space-between; gap: 14px; }
+  .technical-reading-heading h3, .specimen-figure-heading h3, .reference-list-heading h3 { margin-top: 4px; color: #26383a; font-family: "DM Sans", "Noto Sans JP", sans-serif; font-size: 18px; font-weight: 600; letter-spacing: -.02em; }
+  .technical-reading-heading > span, .specimen-figure-heading > span { border-left: 2px solid #0b4aa2; color: #3b6078; font-family: "IBM Plex Mono", monospace; font-size: 10px; padding-left: 7px; }
+  .technical-reading-summary { margin-top: 12px; color: #3d4b49; font-size: 14px; line-height: 1.85; }
+  .equation-list { display: grid; gap: 10px; margin-top: 15px; }
+  .equation-card { border: 1px solid #c3cac5; background: #f1f0eb; padding: 12px 14px 13px; }
+  .equation-card h4 { color: #315f7a; font-family: "IBM Plex Mono", monospace; font-size: 10px; font-weight: 500; letter-spacing: .05em; }
+  .equation-math { overflow-x: auto; margin-top: 7px; padding: 6px 0 4px; color: #223a48; scrollbar-width: thin; }
+  .equation-math .katex-display { margin: 0; text-align: left; }
+  .equation-card p { margin-top: 6px; color: #5a6765; font-size: 12px; line-height: 1.75; }
+  .equation-note { margin-top: 12px; border-left: 2px solid #9ba9a8; padding-left: 9px; color: #62706d; font-size: 12px; line-height: 1.8; }
+  .specimen-svg { display: block; width: 100%; max-width: 560px; height: auto; margin: 12px auto 2px; border: 1px solid #c3cac5; background: #f8f7f2; }
+  .specimen-fill { fill: #e5e7e3; stroke: #344647; stroke-width: 2; }
+  .specimen-inner { fill: #f8f7f2; stroke: #344647; stroke-width: 2; }
+  .specimen-hole { fill: #f8f7f2; stroke: #344647; stroke-width: 2; }
+  .specimen-crack { fill: none; stroke: #b74d2a; stroke-width: 2.5; }
+  .specimen-load, .specimen-rotation, .specimen-torque { fill: none; stroke: #0b4aa2; stroke-width: 2.25; }
+  .specimen-support { fill: #d3d7d2; stroke: #596967; stroke-width: 1.5; }
+  .specimen-grip { stroke: #667775; stroke-width: 2.5; }
+  .specimen-svg marker path { fill: #0b4aa2; }
+  .specimen-dimension line { stroke: #546564; stroke-width: 1.15; }
+  .specimen-dimension text, .specimen-label, .specimen-note { fill: #405553; font-family: "IBM Plex Mono", "Noto Sans JP", monospace; font-size: 12px; }
+  .specimen-label { fill: #0b4aa2; font-weight: 600; }
+  .specimen-note { font-size: 10px; }
+  .specimen-purpose { margin-top: 10px; color: #3d4b49; font-size: 13px; line-height: 1.8; }
+  .specimen-dimension-key { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 11px; }
+  .specimen-dimension-key span { border: 1px solid #c4cbc6; background: #f4f3ee; color: #586764; font-size: 11px; padding: 5px 7px; }
+  .specimen-dimension-key b { margin-right: 5px; color: #245471; font-family: "IBM Plex Mono", monospace; font-weight: 600; }
+  .specimen-source-basis { display: flex; align-items: flex-start; gap: 6px; margin-top: 12px; color: #475654; font-size: 12px; line-height: 1.75; }
+  .specimen-source-basis svg { flex: 0 0 auto; margin-top: 3px; color: #0b4aa2; }
+  .specimen-copyright-note { margin-top: 9px; border-left: 2px solid #a7aeaa; padding-left: 9px; color: #65726f; font-size: 11px; line-height: 1.75; }
+  .specimen-source-link { display: inline-flex; align-items: center; gap: 5px; margin-top: 11px; border-bottom: 1px solid #8ca1a8; color: #0f5080; font-size: 12px; text-decoration: none; }
+  .specimen-source-link:hover { border-color: #0b4aa2; color: #0b4aa2; }
+  .reference-list-heading > svg { color: #0b4aa2; }
+  .reference-list ol { display: grid; gap: 0; margin: 12px 0 0; padding: 0; list-style: none; border-top: 1px solid #c4cbc6; }
+  .reference-list li { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 8px; border-bottom: 1px solid #c4cbc6; padding: 10px 0; }
+  .reference-number { color: #60706d; font-family: "IBM Plex Mono", monospace; font-size: 10px; padding-top: 3px; }
+  .reference-list a { display: inline-flex; align-items: center; gap: 5px; color: #0f5080; font-size: 13px; font-weight: 600; line-height: 1.55; text-decoration: none; }
+  .reference-list a:hover { color: #0b4aa2; text-decoration: underline; text-underline-offset: 3px; }
+  .reference-list p { margin-top: 3px; color: #64716f; font-size: 11px; line-height: 1.65; }
   .empty-state { padding: 65px 22px; text-align: center; }
   .empty-state svg { color: #0b4aa2; }
   .empty-state h3 { margin-top: 13px; font-size: 19px; font-weight: 600; }
@@ -181,7 +222,7 @@
     .catalogue-results.mobile-detail .detail-summary { max-width: 850px; font-size: 18px; line-height: 2.05; }
     .catalogue-results.mobile-detail .detail-facts { max-width: 900px; }
     .catalogue-results.mobile-detail .detail-facts strong { font-size: 16px; }
-    .catalogue-results.mobile-detail .same-theme, .catalogue-results.mobile-detail .test-guide, .catalogue-results.mobile-detail .source-link { max-width: 900px; }
+    .catalogue-results.mobile-detail .same-theme, .catalogue-results.mobile-detail .test-guide, .catalogue-results.mobile-detail .source-link, .catalogue-results.mobile-detail .technical-reading, .catalogue-results.mobile-detail .specimen-figure, .catalogue-results.mobile-detail .reference-list { max-width: 900px; }
     .catalogue-results.mobile-detail .same-theme-list strong { font-size: 15px; }
     .catalogue-results.mobile-detail .test-guide-aim { font-size: 16px; }
     .catalogue-results.mobile-detail .test-guide li, .catalogue-results.mobile-detail .test-guide-caution { font-size: 14px; line-height: 1.9; }
@@ -253,6 +294,10 @@
     .detail-summary { font-size: 14px; }
     .test-guide-columns { grid-template-columns: 1fr; }
     .test-guide-columns > div + div { border-top: 1px solid #c5cbc5; border-left: 0; padding-left: 0; }
+    .technical-reading-summary, .specimen-purpose { font-size: 13px; }
+    .equation-card { padding-right: 11px; padding-left: 11px; }
+    .specimen-dimension-key { gap: 4px; }
+    .specimen-dimension-key span { font-size: 10px; }
   }
 
   @media (min-width: 791px) {

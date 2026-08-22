@@ -5,6 +5,7 @@
  */
 import { useMemo, useState } from "react";
 import catalogueMonitorData from "@/data/catalogue-monitor.json";
+import { StandardResearchPanel } from "@/components/StandardResearchPanel";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -1191,7 +1192,7 @@ export default function Home() {
               {relatedStandards.length > 0 ? <div className="same-theme-list">{relatedStandards.map((standard) => { const isCrossReference = standard.id === crossReferenceStandard?.id; return <button key={standard.id} onClick={() => selectSameThemeStandard(standard.id)}><span className="same-theme-code"><AuthorityPill authority={standard.authority} /> <code>{standard.code}</code></span><span className="relation-flags">{isCrossReference && <b>ISO / JIS 対応</b>}{standard.category === selected.category && <i>同一テーマ</i>}</span><strong>{standard.japaneseTitle}</strong>{isCrossReference && <p>{selected.relation}</p>}<ChevronRight size={18} /></button>; })}</div> : <p className="same-theme-empty">この目録には、関連する別規格がまだありません。</p>}
             </section>
             <section className="test-guide" aria-label={`${selected.code}の試験要件とレポート項目`}><div className="test-guide-heading"><span>TEST BRIEF</span><span>計画・結果・報告</span></div><p className="test-guide-aim">{detailGuide.aim}</p><div className="test-guide-columns"><div><h3>試験内容・条件</h3><ul>{detailGuide.setup.map((item) => <li key={item}>{item}</li>)}</ul></div><div><h3>主要な試験結果</h3><ul>{detailGuide.outcomes.map((item) => <li key={item}>{item}</li>)}</ul></div></div><div className="report-checklist"><h3>レポートに記載する内容</h3><ul>{detailGuide.report.map((item) => <li key={item}><Check size={15} />{item}</li>)}</ul></div><p className="test-guide-caution">{detailGuide.caution}</p></section>
-            <a className="source-link" href={selected.source} target="_blank" rel="noreferrer">{selected.sourceLabel}<ArrowUpRight size={18} /></a>
+            <StandardResearchPanel id={selected.id} category={selected.category} source={selected.source} sourceLabel={selected.sourceLabel} />
           </aside>
         </section>
       </main>
