@@ -155,8 +155,12 @@
   .specimen-hole { fill: #f8f7f2; stroke: #344647; stroke-width: 2; }
   .specimen-crack { fill: none; stroke: #b74d2a; stroke-width: 2.5; }
   .specimen-load, .specimen-rotation, .specimen-torque { fill: none; stroke: #0b4aa2; stroke-width: 2.25; }
+  .specimen-deflection { fill: none; stroke: #0b4aa2; stroke-width: 1.5; stroke-dasharray: 7 5; }
   .specimen-support { fill: #d3d7d2; stroke: #596967; stroke-width: 1.5; }
-  .specimen-grip { stroke: #667775; stroke-width: 2.5; }
+  .specimen-layer { fill: #cbd5d1; stroke: #344647; stroke-width: 1.5; }
+  .specimen-grip { fill: none; stroke: #667775; stroke-width: 2.5; }
+  .specimen-centerline { fill: none; stroke: #7f8c8a; stroke-width: 1; stroke-dasharray: 14 3 3 3; }
+  .specimen-leader { fill: none; stroke: #546564; stroke-width: 1; }
   .specimen-svg marker path { fill: #0b4aa2; }
   .specimen-dimension line { stroke: #546564; stroke-width: 1.15; }
   .specimen-dimension text, .specimen-label, .specimen-note { fill: #405553; font-family: "IBM Plex Mono", "Noto Sans JP", monospace; font-size: 12px; }
