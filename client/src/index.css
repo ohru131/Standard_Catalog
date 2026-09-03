@@ -249,7 +249,7 @@
 
   .test-guide-heading { display: flex; justify-content: space-between; color: var(--accent-quiet); font-family: "IBM Plex Mono", monospace; font-size: var(--t-mono); letter-spacing: .1em; }
   .test-guide-aim { margin-top: 12px; color: var(--ink-2); font-size: var(--t-md); font-weight: 600; line-height: 1.85; }
-  .test-guide-columns { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin-top: 16px; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding-bottom: 2px; }
+  .test-guide-columns { display: grid; grid-template-columns: 1fr 1fr; margin-top: 16px; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding-bottom: 2px; }
   .test-guide-columns > div { padding: 13px 14px 15px 0; }
   .test-guide-columns > div + div { border-left: 1px solid var(--rule); padding-right: 0; padding-left: 14px; }
   .test-guide h3 { color: var(--ink-3); font-family: "IBM Plex Mono", monospace; font-size: var(--t-mono); font-weight: 500; letter-spacing: .06em; }
@@ -337,8 +337,11 @@
     .data-update-status { display: block; margin: 5px 0 0; }
     .standard-row { padding: 15px 8px; }
     .detail-facts { grid-template-columns: 1fr; }
+    /* Stacked: the four cells are four rows, so only the last one may drop its rule. */
+    .detail-facts div:nth-last-child(2) { border-bottom: 1px solid var(--rule-mid); }
     .detail-facts div:nth-child(odd) { border-right: 0; padding-right: 0; }
     .detail-facts div:nth-child(even) { padding-left: 0; }
+    .test-guide-columns { grid-template-columns: 1fr; }
     .test-guide-columns > div { padding-right: 0; }
     .test-guide-columns > div + div { border-top: 1px solid var(--rule); border-left: 0; padding-left: 0; }
     .specimen-dimension-key span { font-size: var(--t-mono); }
