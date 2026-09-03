@@ -2,27 +2,19 @@
  * Design reminder — 「試験片の余白」:
  * Swiss editorial structure, warm paper, graphite rules, and Fatigue Cobalt
  * prioritize searchable standards data over decorative UI.
+ *
+ * The catalogue is one column at every width: masthead, view tabs, then either
+ * the record list or the selected record. Nothing else competes for the page.
  */
-import { useMemo, useState } from "react";
+import { useMemo, useState, type KeyboardEvent } from "react";
 import catalogueMonitorData from "@/data/catalogue-monitor.json";
 import { StandardResearchPanel } from "@/components/StandardResearchPanel";
-import {
-  ArrowRight,
-  ArrowUpRight,
-  BookOpen,
-  Check,
-  ChevronRight,
-  ExternalLink,
-  FileSearch,
-  Filter,
-  FlaskConical,
-  Menu,
-  Search,
-  SlidersHorizontal,
-  X,
-} from "lucide-react";
+import { ArrowUpRight, Check, ChevronRight, Filter, FlaskConical, Search, SlidersHorizontal, X } from "lucide-react";
 
 type Authority = "ASTM" | "ISO" | "JIS";
+
+/** The catalogue shows one view at a time: the record list, or the selected record. */
+type CatalogueView = "list" | "detail";
 
 type Standard = {
   id: string;
@@ -1107,9 +1099,8 @@ export default function Home() {
   const [materialFilter, setMaterialFilter] = useState("すべて");
   const [hasJis, setHasJis] = useState(false);
   const [selectedId, setSelectedId] = useState("iso-1099");
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
-  const [mobileView, setMobileView] = useState<"detail" | "list">("list");
+  const [view, setView] = useState<CatalogueView>("list");
 
   const filteredStandards = useMemo(() => {
     const normalized = query.trim().toLowerCase();
@@ -1133,11 +1124,7 @@ export default function Home() {
   const sameThemeStandards = standards.filter((standard) => standard.category === selected.category && standard.id !== selected.id && (standard.materials ?? [standard.material]).some((material) => selectedMaterials.includes(material)));
   const crossReferenceStandard = selected.relatedJis === "—" ? undefined : standards.find((standard) => standard.code === selected.relatedJis);
   const relatedStandards = Array.from(new Map([...sameThemeStandards, ...(crossReferenceStandard ? [crossReferenceStandard] : [])].map((standard) => [standard.id, standard])).values());
-  const authorityCounts = useMemo(() => ({
-    ASTM: standards.filter((item) => item.authority === "ASTM").length,
-    ISO: standards.filter((item) => item.authority === "ISO").length,
-    JIS: standards.filter((item) => item.authority === "JIS").length,
-  }), []);
+  const isFiltered = Boolean(query) || authority !== "すべて" || category !== "すべて" || materialFilter !== "すべて" || hasJis;
 
   function clearFilters() {
     setQuery("");
@@ -1147,10 +1134,23 @@ export default function Home() {
     setHasJis(false);
   }
 
+  function selectStandard(standardId: string) {
+    setSelectedId(standardId);
+    setView("detail");
+  }
+
   function selectSameThemeStandard(standardId: string) {
     clearFilters();
-    setSelectedId(standardId);
-    setMobileView("detail");
+    selectStandard(standardId);
+  }
+
+  /** Arrow keys move between the two catalogue views, as expected of an ARIA tablist. */
+  function handleTabKeys(event: KeyboardEvent<HTMLDivElement>) {
+    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+    event.preventDefault();
+    const next: CatalogueView = view === "list" ? "detail" : "list";
+    setView(next);
+    event.currentTarget.querySelector<HTMLButtonElement>(`#catalogue-tab-${next}`)?.focus();
   }
 
   return (
@@ -1159,168 +1159,72 @@ export default function Home() {
         <section className="catalogue-intro-section" aria-labelledby="catalogue-title">
           <div className="catalogue-heading"><p className="eyebrow">STANDARD CATALOGUE</p><h1 id="catalogue-title">規格目録</h1></div>
           <div className="search-surface">
-            <Search className="search-icon" size={23} aria-hidden="true" />
-            <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="例：ISO 1099、動的粘弾性、金属材料、制振" aria-label="規格を検索" />
-            {query && <button className="clear-query" onClick={() => setQuery("")} aria-label="検索語をクリア"><X size={20} /></button>}
-            <button className="search-submit" aria-label="検索結果を表示"><ArrowRight size={23} /></button>
-          </div>
-          <button className="filters-toggle" onClick={() => setIsFiltersOpen((value) => !value)} aria-expanded={isFiltersOpen} aria-controls="catalogue-filters"><SlidersHorizontal size={16} /><span>{isFiltersOpen ? "絞り込み条件を閉じる" : "規格体系・試験領域・材料で絞り込む"}</span><ChevronRight size={17} /></button>
-          <div id="catalogue-filters" className={`filters catalogue-filters ${isFiltersOpen ? "is-expanded" : ""}`} aria-label="規格フィルタ">
-            <div className="filter-group"><span className="filter-label"><SlidersHorizontal size={16} /> 規格体系</span>{(["すべて", "ASTM", "ISO", "JIS"] as const).map((item) => <button key={item} className={`filter-button ${authority === item ? "selected" : ""}`} onClick={() => { setAuthority(item); setMobileView("list"); }}>{item}</button>)}</div>
-            <div className="filter-group category-group"><span className="filter-label"><Filter size={16} /> 試験領域</span><div className="category-scroll">{categories.map((item) => <button key={item} className={`category-chip ${category === item ? "selected" : ""}`} onClick={() => { setCategory(item); setMobileView("list"); }}>{item}</button>)}</div></div>
-            <div className="filter-group category-group"><span className="filter-label"><FlaskConical size={16} /> 材料</span><div className="category-scroll">{materialFilters.map((item) => <button key={item} className={`category-chip ${materialFilter === item ? "selected" : ""}`} onClick={() => { setMaterialFilter(item); setMobileView("list"); }}>{item}</button>)}</div></div>
-            <label className="switch-control"><input type="checkbox" checked={hasJis} onChange={(event) => { setHasJis(event.target.checked); setMobileView("list"); }} /><span className="switch-track"><span /></span> 対応・関連JISあり</label>
-          </div>
-        </section>
-
-        <div className="mobile-view-switch" aria-label="規格表示の切替"><button className={mobileView === "list" ? "selected" : ""} onClick={() => setMobileView("list")}>規格一覧 <span>{filteredStandards.length}</span></button><button className={mobileView === "detail" ? "selected" : ""} onClick={() => setMobileView("detail")}>選択中の規格内容</button></div>
-        <section className={`catalogue-results mobile-${mobileView}`} aria-label="検索結果と規格詳細">
-          <div className="results-panel">
-          <div className="results-heading"><div><span className="result-number">{String(filteredStandards.length).padStart(2, "0")}</span><span> 件の規格</span><span className="data-update-status">データ自動更新日：{formatCheckDate(catalogueMonitor.lastCompletedAt)} · {catalogueMonitor.latestRun?.checked ?? 0}/{standards.length}件</span></div>{(query || authority !== "すべて" || category !== "すべて" || materialFilter !== "すべて" || hasJis) && <button onClick={clearFilters} className="reset-button"><X size={17} /> 条件を解除</button>}</div>
-            <div className="standard-list">
-              {filteredStandards.length > 0 ? filteredStandards.map((standard, index) => <button key={standard.id} className={`standard-row ${selected.id === standard.id ? "selected" : ""}`} onClick={() => { setSelectedId(standard.id); setMobileView("detail"); }}><div className="row-index">{String(index + 1).padStart(2, "0")}</div><div className="row-main"><div className="row-code"><AuthorityPill authority={standard.authority} /><span>{standard.code}</span>{standard.status === "new" && <b>NEW</b>}</div><h3>{standard.japaneseTitle}</h3><p>{standard.englishTitle}</p></div><div className="row-tags"><span>{standard.category}</span><span>{standard.material}</span></div><ChevronRight className="row-arrow" size={22} /></button>) : <div className="empty-state"><FlaskConical size={30} /><h3>一致する規格がありません。</h3><p>別の規格番号、試験方法、材料、または広い試験領域で再検索してください。</p><button onClick={clearFilters}>すべての規格を見る</button></div>}
-            </div>
-          </div>
-
-          <aside className="detail-panel" aria-label="選択中の規格詳細">
-            <div className="detail-topline"><span>SELECTED STANDARD</span><span>{selected.edition}</span></div>
-            <div className="detail-code"><AuthorityPill authority={selected.authority} /><a className="detail-code-link" href={selected.source} target="_blank" rel="noreferrer" aria-label={`${selected.code}の公式個別規格ページを開く`} title="公式個別規格ページを開く"><code>{selected.code}</code><ArrowUpRight size={16} aria-hidden="true" /></a></div>
-            <h2>{selected.japaneseTitle}</h2><p className="detail-english">{selected.englishTitle}</p><div className="official-scope"><p className="eyebrow">{selected.authority === "ASTM" ? "OFFICIAL SCOPE / SIGNIFICANCE · 日本語要約" : "OFFICIAL SCOPE · 日本語要約"}</p><p className="detail-summary">{officialScopeSummaries[selected.id] ?? selected.summary}</p></div>
-            <div className="detail-facts"><div><span>試験領域</span><strong>{selected.category}</strong></div><div><span>制御・方法</span><strong>{selected.method}</strong></div><div><span>対象材料</span><strong>{selected.material}</strong></div><div><span>公式ページ確認日</span><strong>{formatCheckDate(selectedMonitor?.checkedAt)}{selectedMonitor?.pendingReview ? " · 要確認" : selectedMonitor?.lastError ? " · 未取得" : ""}</strong></div></div>
-            <section className="same-theme" aria-labelledby="same-theme-title">
-              <div className="same-theme-heading"><div><p className="eyebrow">RELATED STANDARDS</p><h3 id="same-theme-title">関連規格</h3></div><span>{selected.category}</span></div>
-              {relatedStandards.length > 0 ? <div className="same-theme-list">{relatedStandards.map((standard) => { const isCrossReference = standard.id === crossReferenceStandard?.id; return <button key={standard.id} onClick={() => selectSameThemeStandard(standard.id)}><span className="same-theme-code"><AuthorityPill authority={standard.authority} /> <code>{standard.code}</code></span><span className="relation-flags">{isCrossReference && <b>ISO / JIS 対応</b>}{standard.category === selected.category && <i>同一テーマ</i>}</span><strong>{standard.japaneseTitle}</strong>{isCrossReference && <p>{selected.relation}</p>}<ChevronRight size={18} /></button>; })}</div> : <p className="same-theme-empty">この目録には、関連する別規格がまだありません。</p>}
-            </section>
-            <section className="test-guide" aria-label={`${selected.code}の試験要件とレポート項目`}><div className="test-guide-heading"><span>TEST BRIEF</span><span>計画・結果・報告</span></div><p className="test-guide-aim">{detailGuide.aim}</p><div className="test-guide-columns"><div><h3>試験内容・条件</h3><ul>{detailGuide.setup.map((item) => <li key={item}>{item}</li>)}</ul></div><div><h3>主要な試験結果</h3><ul>{detailGuide.outcomes.map((item) => <li key={item}>{item}</li>)}</ul></div></div><div className="report-checklist"><h3>レポートに記載する内容</h3><ul>{detailGuide.report.map((item) => <li key={item}><Check size={15} />{item}</li>)}</ul></div><p className="test-guide-caution">{detailGuide.caution}</p></section>
-            <StandardResearchPanel id={selected.id} category={selected.category} source={selected.source} sourceLabel={selected.sourceLabel} />
-          </aside>
-        </section>
-      </main>
-    </div>
-  );
-
-  return (
-    <div className="min-h-screen bg-[#f6f3ec] text-[#1f262d] selection:bg-[#0b4aa2] selection:text-white">
-      <aside className={`portal-sidebar ${isSidebarOpen ? "is-open" : ""}`} aria-label="主要ナビゲーション">
-        <div className="sidebar-brand">
-          <img className="brand-mark" src="/manus-storage/specimen-loop-mark_1b787ba1.png" alt="Fatigue Indexのシンボル" />
-          <div>
-            <p className="brand-name">FATIGUE<br /><span>/ INDEX</span></p>
-            <p className="brand-subtitle">STANDARDS PORTAL</p>
-          </div>
-          <button className="mobile-close" onClick={() => setIsSidebarOpen(false)} aria-label="メニューを閉じる"><X size={20} /></button>
-        </div>
-
-        <nav className="sidebar-nav">
-          <a className="active" href="#catalogue" onClick={() => setIsSidebarOpen(false)}><span className="nav-coordinate">01</span><BookOpen size={17} /> 規格目録 <span>{standards.length}</span></a>
-          <a href="#equipment" onClick={() => setIsSidebarOpen(false)}><span className="nav-coordinate">02</span><FlaskConical size={17} /> 参考装置</a>
-          <a href="#guide" onClick={() => setIsSidebarOpen(false)}><span className="nav-coordinate">03</span><FileSearch size={17} /> 使い方</a>
-          <a href="#sources" onClick={() => setIsSidebarOpen(false)}><span className="nav-coordinate">04</span><ExternalLink size={17} /> 出典・確認</a>
-        </nav>
-
-        <div className="sidebar-rule" />
-        <div className="sidebar-scope">
-          <p className="eyebrow">CATALOGUE SCOPE</p>
-          <p>疲労・動的試験・動特性を横断する、材料別の参照目録。</p>
-          <dl>
-            <div><dt>ASTM</dt><dd>{authorityCounts.ASTM}</dd></div>
-            <div><dt>ISO</dt><dd>{authorityCounts.ISO}</dd></div>
-            <div><dt>JIS</dt><dd>{authorityCounts.JIS}</dd></div>
-          </dl>
-        </div>
-
-        <div className="sidebar-footer">
-          <span className="live-dot" /> 収載情報：2026.08 確認
-        </div>
-      </aside>
-
-      <main className="portal-main">
-        <header className="topbar">
-          <button className="mobile-menu" onClick={() => setIsSidebarOpen(true)} aria-label="メニューを開く"><Menu size={22} /></button>
-          <div className="mobile-wordmark"><img src="/manus-storage/specimen-loop-mark_1b787ba1.png" alt="" /><span>FATIGUE<br /><b>/ INDEX</b></span></div>
-          <div className="crumb"><span>資料室</span><ChevronRight size={14} /><strong>疲労・動特性</strong></div>
-          <div className="topbar-note"><span /> 規格本文ではなく、探索のための参照目録です。</div>
-        </header>
-
-        <div className="document-rail" aria-hidden="true"><strong>F/I</strong><span>00</span><i /><span>01</span><i /><span>02</span><i /><span>03</span><i /><span>04</span></div>
-
-        <section className="hero" aria-labelledby="page-title">
-          <div className="hero-copy">
-            <div className="eyebrow with-rule">FATIGUE &amp; DYNAMIC PROPERTIES</div>
-            <h1 id="page-title">規格の交点から、<br /><em>試験計画へ。</em></h1>
-            <p>ASTM・ISO・JISを横断し、疲労試験、動的試験、動的粘弾性・制振特性の規格を、材料別に辿ります。</p>
-            <div className="hero-meta"><span>ASTM / ISO / JIS</span><span>EXPANDED CATALOGUE</span></div>
-            <a className="hero-catalogue-link" href="#catalogue"><span>EXPLORE / {standards.length} RECORDS</span><ArrowRight size={15} /></a>
-          </div>
-          <div className="hero-visual" aria-hidden="true">
-            <img src="/manus-storage/fatigue-hero_52fcf225.png" alt="" />
-          </div>
-        </section>
-
-        <section id="catalogue" className="catalogue-section" aria-labelledby="catalogue-title">
-          <div className="section-kicker"><span>01</span><div><p className="eyebrow">STANDARD CATALOGUE</p><h2 id="catalogue-title">規格を検索する</h2></div></div>
-          <p className="catalogue-intro">規格番号、試験方法、材料、キーワードから絞り込みます。各レコードは可能な限り規格機関の個別規格ページへ接続します。</p>
-
-          <div className="search-surface">
             <Search className="search-icon" size={20} aria-hidden="true" />
-            <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="例：動的粘弾性、ISO 6721、金属材料、制振" aria-label="規格を検索" />
-            {query && <button className="clear-query" onClick={() => setQuery("")} aria-label="検索語をクリア"><X size={17} /></button>}
-            <button className="search-submit" aria-label="検索結果を表示"><ArrowRight size={20} /></button>
+            <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="例：ISO 1099、動的粘弾性、金属材料、制振" aria-label="規格を検索" />
+            {query && <button className="clear-query" onClick={() => setQuery("")} aria-label="検索語をクリア"><X size={18} /></button>}
           </div>
-
-          <div className="filters" aria-label="規格フィルタ">
-            <div className="filter-group">
-              <span className="filter-label"><SlidersHorizontal size={14} /> 規格体系</span>
-              {(["すべて", "ASTM", "ISO", "JIS"] as const).map((item) => (
-                <button key={item} className={`filter-button ${authority === item ? "selected" : ""}`} onClick={() => setAuthority(item)}>{item}</button>
-              ))}
-            </div>
-            <div className="filter-group category-group">
-              <span className="filter-label"><Filter size={14} /> 試験領域</span>
-              <div className="category-scroll">{categories.map((item) => (
-                <button key={item} className={`category-chip ${category === item ? "selected" : ""}`} onClick={() => setCategory(item)}>{item}</button>
-              ))}</div>
-            </div>
-            <div className="filter-group category-group">
-              <span className="filter-label"><FlaskConical size={14} /> 材料</span>
-              <div className="category-scroll">{materialFilters.map((item) => (
-                <button key={item} className={`category-chip ${materialFilter === item ? "selected" : ""}`} onClick={() => setMaterialFilter(item)}>{item}</button>
-              ))}</div>
-            </div>
-            <label className="switch-control"><input type="checkbox" checked={hasJis} onChange={(event) => setHasJis(event.target.checked)} /><span className="switch-track"><span /></span> 対応・関連JISあり</label>
+          <button className="filters-toggle" onClick={() => setIsFiltersOpen((value) => !value)} aria-expanded={isFiltersOpen} aria-controls="catalogue-filters"><SlidersHorizontal size={16} aria-hidden="true" /><span>{isFiltersOpen ? "絞り込み条件を閉じる" : "規格体系・試験領域・材料で絞り込む"}</span><ChevronRight size={17} aria-hidden="true" /></button>
+          <div id="catalogue-filters" role="group" className={`filters catalogue-filters ${isFiltersOpen ? "is-expanded" : ""}`} aria-label="規格フィルタ">
+            <div className="filter-group"><span className="filter-label"><SlidersHorizontal size={14} aria-hidden="true" /> 規格体系</span>{(["すべて", "ASTM", "ISO", "JIS"] as const).map((item) => <button key={item} className={`filter-button ${authority === item ? "selected" : ""}`} aria-pressed={authority === item} onClick={() => { setAuthority(item); setView("list"); }}>{item}</button>)}</div>
+            <div className="filter-group category-group"><span className="filter-label"><Filter size={14} aria-hidden="true" /> 試験領域</span><div className="category-scroll">{categories.map((item) => <button key={item} className={`category-chip ${category === item ? "selected" : ""}`} aria-pressed={category === item} onClick={() => { setCategory(item); setView("list"); }}>{item}</button>)}</div></div>
+            <div className="filter-group category-group"><span className="filter-label"><FlaskConical size={14} aria-hidden="true" /> 材料</span><div className="category-scroll">{materialFilters.map((item) => <button key={item} className={`category-chip ${materialFilter === item ? "selected" : ""}`} aria-pressed={materialFilter === item} onClick={() => { setMaterialFilter(item); setView("list"); }}>{item}</button>)}</div></div>
+            <label className="switch-control"><input type="checkbox" checked={hasJis} onChange={(event) => { setHasJis(event.target.checked); setView("list"); }} /><span className="switch-track" aria-hidden="true"><span /></span> 対応・関連JISあり</label>
           </div>
         </section>
 
-        <section className="results-layout" aria-label="検索結果と規格詳細">
-          <div className="results-panel">
-            <div className="results-heading">
-              <div><span className="result-number">{String(filteredStandards.length).padStart(2, "0")}</span><span> 件の規格</span></div>
-              {(query || authority !== "すべて" || category !== "すべて" || materialFilter !== "すべて" || hasJis) && <button onClick={clearFilters} className="reset-button"><X size={15} /> 条件を解除</button>}
-            </div>
+        <div className="view-switch" role="tablist" aria-label="規格表示の切替" onKeyDown={handleTabKeys}>
+          <button id="catalogue-tab-list" role="tab" aria-selected={view === "list"} aria-controls="catalogue-panel-list" tabIndex={view === "list" ? 0 : -1} className={view === "list" ? "selected" : ""} onClick={() => setView("list")}>規格一覧 <span>{filteredStandards.length}</span></button>
+          <button id="catalogue-tab-detail" role="tab" aria-selected={view === "detail"} aria-controls="catalogue-panel-detail" tabIndex={view === "detail" ? 0 : -1} className={view === "detail" ? "selected" : ""} onClick={() => setView("detail")}>選択中の規格内容</button>
+        </div>
 
+        <section className="catalogue-results">
+          <div className="results-panel" id="catalogue-panel-list" role="tabpanel" aria-labelledby="catalogue-tab-list" hidden={view !== "list"}>
+            <div className="results-heading">
+              <p className="results-count"><span className="result-number">{String(filteredStandards.length).padStart(2, "0")}</span>件の規格<span className="data-update-status">データ自動更新日：{formatCheckDate(catalogueMonitor.lastCompletedAt)} · {catalogueMonitor.latestRun?.checked ?? 0}/{standards.length}件</span></p>
+              {isFiltered && <button onClick={clearFilters} className="reset-button"><X size={15} aria-hidden="true" /> 条件を解除</button>}
+            </div>
             <div className="standard-list">
-              {filteredStandards.length > 0 ? filteredStandards.map((standard, index) => (
-                <button key={standard.id} className={`standard-row ${selected.id === standard.id ? "selected" : ""}`} onClick={() => setSelectedId(standard.id)}>
-                  <div className="row-index">{String(index + 1).padStart(2, "0")}</div>
-                  <div className="row-main"><div className="row-code"><AuthorityPill authority={standard.authority} /><span>{standard.code}</span>{standard.status === "new" && <b>NEW</b>}</div><h3>{standard.japaneseTitle}</h3><p>{standard.englishTitle}</p></div>
-                  <div className="row-tags"><span>{standard.category}</span><span>{standard.material}</span></div>
-                  <ChevronRight className="row-arrow" size={20} />
-                </button>
-              )) : (
-                <div className="empty-state"><FlaskConical size={25} /><h3>一致する規格がありません。</h3><p>別の規格番号、試験方法、または広い試験領域で再検索してください。</p><button onClick={clearFilters}>すべての規格を見る</button></div>
-              )}
+              {filteredStandards.length > 0 ? filteredStandards.map((standard, index) => <button key={standard.id} className={`standard-row ${selected.id === standard.id ? "selected" : ""}`} onClick={() => selectStandard(standard.id)}>
+                <span className="row-index">{String(index + 1).padStart(2, "0")}</span>
+                <span className="row-main">
+                  <span className="row-code"><AuthorityPill authority={standard.authority} /><span>{standard.code}</span>{standard.status === "new" && <b>NEW</b>}</span>
+                  <span className="row-title">{standard.japaneseTitle}</span>
+                  <span className="row-english">{standard.englishTitle}</span>
+                </span>
+                <span className="row-tags"><span>{standard.category}</span><span>{standard.material}</span></span>
+                <ChevronRight className="row-arrow" size={20} aria-hidden="true" />
+              </button>) : <div className="empty-state"><FlaskConical size={28} aria-hidden="true" /><h3>一致する規格がありません。</h3><p>別の規格番号、試験方法、材料、または広い試験領域で再検索してください。</p><button onClick={clearFilters}>すべての規格を見る</button></div>}
             </div>
           </div>
 
-          <aside className="detail-panel" aria-label="選択中の規格詳細">
-            <div className="detail-topline"><span>SELECTED RECORD</span><span>{selected.edition}</span></div>
-            <div className="detail-code"><AuthorityPill authority={selected.authority} /><code>{selected.code}</code></div>
+          <article className="detail-panel" id="catalogue-panel-detail" role="tabpanel" aria-labelledby="catalogue-tab-detail" hidden={view !== "detail"}>
+            <div className="detail-topline"><span>SELECTED STANDARD</span><span>{selected.edition}</span></div>
+            <div className="detail-code"><AuthorityPill authority={selected.authority} /><a className="detail-code-link" href={selected.source} target="_blank" rel="noreferrer" aria-label={`${selected.code}の公式個別規格ページを開く`} title="公式個別規格ページを開く"><code>{selected.code}</code><ArrowUpRight size={15} aria-hidden="true" /></a></div>
             <h2>{selected.japaneseTitle}</h2>
             <p className="detail-english">{selected.englishTitle}</p>
-            <p className="detail-summary">{selected.summary}</p>
-            <div className="detail-facts"><div><span>試験領域</span><strong>{selected.category}</strong></div><div><span>制御・方法</span><strong>{selected.method}</strong></div><div><span>対象材料</span><strong>{selected.material}</strong></div></div>
-            <div className="related-jis"><div className="related-label"><span>ISO / JIS CROSS-REFERENCE</span><ArrowRight size={16} /></div><strong>{selected.relatedJis}</strong><p>{selected.relation}</p></div>
-            <div className="scope-notes"><p className="eyebrow">INDEX NOTES</p>{selected.notes.map((note) => <span key={note}><Check size={14} /> {note}</span>)}</div>
+            <div className="official-scope">
+              <p className="eyebrow">{selected.authority === "ASTM" ? "OFFICIAL SCOPE / SIGNIFICANCE · 日本語要約" : "OFFICIAL SCOPE · 日本語要約"}</p>
+              <p className="detail-summary">{officialScopeSummaries[selected.id] ?? selected.summary}</p>
+            </div>
+            <dl className="detail-facts">
+              <div><dt>試験領域</dt><dd>{selected.category}</dd></div>
+              <div><dt>制御・方法</dt><dd>{selected.method}</dd></div>
+              <div><dt>対象材料</dt><dd>{selected.material}</dd></div>
+              <div><dt>公式ページ確認日</dt><dd>{formatCheckDate(selectedMonitor?.checkedAt)}{selectedMonitor?.pendingReview ? " · 要確認" : selectedMonitor?.lastError ? " · 未取得" : ""}</dd></div>
+            </dl>
+            <section className="same-theme" aria-labelledby="same-theme-title">
+              <div className="same-theme-heading"><div><p className="eyebrow">RELATED STANDARDS</p><h3 id="same-theme-title">関連規格</h3></div><span>{selected.category}</span></div>
+              {relatedStandards.length > 0 ? <div className="same-theme-list">{relatedStandards.map((standard) => {
+                const isCrossReference = standard.id === crossReferenceStandard?.id;
+                return <button key={standard.id} onClick={() => selectSameThemeStandard(standard.id)}>
+                  <span className="same-theme-code"><AuthorityPill authority={standard.authority} /> <code>{standard.code}</code></span>
+                  <span className="relation-flags">{isCrossReference && <b>ISO / JIS 対応</b>}{standard.category === selected.category && <i>同一テーマ</i>}</span>
+                  <strong>{standard.japaneseTitle}</strong>
+                  {isCrossReference && <span className="relation-note">{selected.relation}</span>}
+                  <ChevronRight size={18} aria-hidden="true" />
+                </button>;
+              })}</div> : <p className="same-theme-empty">この目録には、関連する別規格がまだありません。</p>}
+            </section>
             <section className="test-guide" aria-label={`${selected.code}の試験要件とレポート項目`}>
               <div className="test-guide-heading"><span>TEST BRIEF</span><span>計画・結果・報告</span></div>
               <p className="test-guide-aim">{detailGuide.aim}</p>
@@ -1328,34 +1232,12 @@ export default function Home() {
                 <div><h3>試験内容・条件</h3><ul>{detailGuide.setup.map((item) => <li key={item}>{item}</li>)}</ul></div>
                 <div><h3>主要な試験結果</h3><ul>{detailGuide.outcomes.map((item) => <li key={item}>{item}</li>)}</ul></div>
               </div>
-              <div className="report-checklist"><h3>レポートに記載する内容</h3><ul>{detailGuide.report.map((item) => <li key={item}><Check size={13} />{item}</li>)}</ul></div>
+              <div className="report-checklist"><h3>レポートに記載する内容</h3><ul>{detailGuide.report.map((item) => <li key={item}><Check size={14} aria-hidden="true" />{item}</li>)}</ul></div>
               <p className="test-guide-caution">{detailGuide.caution}</p>
             </section>
-            <a className="source-link" href={selected.source} target="_blank" rel="noreferrer">{selected.sourceLabel}<ArrowUpRight size={16} /></a>
-          </aside>
+            <StandardResearchPanel id={selected.id} category={selected.category} source={selected.source} sourceLabel={selected.sourceLabel} />
+          </article>
         </section>
-
-        <section id="equipment" className="equipment-section" aria-labelledby="equipment-title">
-          <div className="section-kicker"><span>02</span><div><p className="eyebrow">REFERENCE TEST SYSTEMS</p><h2 id="equipment-title">試験計画を支える、<br />参考装置構成。</h2></div></div>
-          <p className="equipment-intro">規格の適合性は、試験機の型式だけでは確定しません。ここでは、ご指定の島津製作所の公式情報をもとに、試験方式・環境・部品評価を検討する際の参考装置として整理しています。</p>
-          <div className="equipment-grid">
-            <article className="equipment-card equipment-card-emt"><div className="equipment-photo"><span>REF. 02-A</span><img src="/manus-storage/shimadzu-emt-system_1806a799.webp" alt="島津製作所 EMTシリーズの電磁式疲労・耐久試験システム" /></div><div className="equipment-copy"><p className="eyebrow">ELECTROMAGNETIC / HIGH-CYCLE</p><h3>EMTシリーズ</h3><p>電磁力を駆動源とする疲労・耐久試験システム。高速繰返し試験、広い試験空間、恒温槽を用いた環境試験の検討に対応する参考構成です。</p><dl><div><dt>駆動</dt><dd>電磁式</dd></div><div><dt>仕様例</dt><dd>最大 2 m/s</dd></div><div><dt>ストローク</dt><dd>±50 mm</dd></div></dl><a href="https://www.an.shimadzu.co.jp/products/materials-testing/fatigue-testingimpact-testing/emt-series/index.html" target="_blank" rel="noreferrer">島津製作所 EMTシリーズ <ArrowUpRight size={15} /></a></div></article>
-            <article className="equipment-card"><div className="equipment-photo equipment-photo-ehf"><span>REF. 02-B</span><img src="/manus-storage/shimadzu-ehf-e-system_9943944d.png" alt="島津製作所 EHF-Eシリーズの電気油圧式サーボ疲労試験機" /></div><div className="equipment-copy"><p className="eyebrow">ELECTROHYDRAULIC / COMPONENT</p><h3>EHF-Eシリーズ</h3><p>材料疲労から小型部品の性能・耐久評価までを想定したサーボパルサ。高温・恒温環境、熱疲労、破壊靱性評価と組み合わせる際の参考構成です。</p><dl><div><dt>駆動</dt><dd>電気油圧サーボ</dd></div><div><dt>定格例</dt><dd>50–500 kN</dd></div><div><dt>対象</dt><dd>材料・小型部品</dd></div></dl><a href="https://www.an.shimadzu.co.jp/products/materials-testing/fatigue-testingimpact-testing/ehf-e-series/index.html" target="_blank" rel="noreferrer">島津製作所 EHF-Eシリーズ <ArrowUpRight size={15} /></a></div></article>
-          </div>
-          <p className="equipment-notice">装置写真・仕様の出典：島津製作所の各製品個別ページ。掲載内容は参考情報であり、規格への適合には、実際の装置構成、校正、治具、計測器、試験条件の個別確認が必要です。</p>
-        </section>
-
-        <section id="guide" className="guide-section" aria-labelledby="guide-title">
-          <div className="guide-image"><img src="/manus-storage/fatigue-micrograph_7febfbcb.png" alt="疲労破面を想起させる金属組織のイメージ" /></div>
-          <div className="guide-copy"><div className="section-kicker"><span>03</span><div><p className="eyebrow">HOW TO READ</p><h2 id="guide-title">対応表記は、<br />試験条件を省略しない。</h2></div></div><p>同じ「疲労試験」でも、制御量、温度、試験片、負荷波形、結果の取り扱いは規格ごとに異なります。このポータルでは、規格番号の近接性を「関連」として示し、同等性を断定しません。</p><a href="#sources" className="text-link">出典と確認上の注意を読む <ArrowRight size={17} /></a></div>
-        </section>
-
-        <section id="sources" className="sources-section" aria-labelledby="sources-title">
-          <div className="section-kicker"><span>04</span><div><p className="eyebrow">SOURCE &amp; NOTICE</p><h2 id="sources-title">原典で確認するために</h2></div></div>
-          <div className="sources-grid"><div><h3>掲載方針</h3><p>規格本文は掲載せず、公開メタデータをもとに、規格探索に必要な番号、版、題名、試験領域を整理しています。改正・廃止・対比関係は、試験計画に用いる前に必ず公式規格票で確認してください。</p></div><div><h3>公式個別ページ</h3><p>詳細パネルの「個別規格ページ」から、ASTM、ISO、JISの該当規格を直接開けます。規格体系の集約ページではなく、各レコード固有の参照先を優先しています。</p></div><div className="dynamic-card"><img src="/manus-storage/dynamic-loading-abstract_f1f80002.png" alt="周期荷重を表す抽象ビジュアル" /><p>規格の発行年だけでは適用可否を判断できません。</p><span>CHECK / SCOPE / EDITION</span></div></div>
-        </section>
-
-        <footer className="portal-footer"><div className="footer-brand"><img src="/manus-storage/specimen-loop-mark_1b787ba1.png" alt="" /><span>FATIGUE<br /><b>/ INDEX</b></span></div><span>Expanded catalogue · {standards.length} records · 2026.08</span><span>資料探索のための参照ポータル</span></footer>
       </main>
     </div>
   );
