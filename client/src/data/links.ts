@@ -29,6 +29,8 @@ export type LinkHealthRecord = {
   checkMethod?: string;
   finalUrl?: string;
   ok?: boolean;
+  /** 401/403/429。サーバーは応答しているが自動確認を拒否した状態で、リンク切れではありません。 */
+  restricted?: boolean;
   consecutiveFailures?: number;
   hidden?: boolean;
   lastError?: string | null;
@@ -37,7 +39,7 @@ export type LinkHealthRecord = {
 export type LinkHealth = {
   schemaVersion: number;
   lastCompletedAt: string | null;
-  latestRun: { checked: number; ok: number; broken: number; hidden: number; failThreshold?: number } | null;
+  latestRun: { checked: number; ok: number; broken: number; hidden: number; restricted?: number; failThreshold?: number } | null;
   links: Record<string, LinkHealthRecord>;
 };
 

@@ -30,6 +30,12 @@ function clampInt(value, fallback, min, max) {
 
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+/**
+ * サーバーが応答していながら自動化からのアクセスを拒否する状態。URL自体は存在するため、
+ * リンク切れとは区別し、非表示判定の対象外とします（例：ISOやCloudflare配下のbot対策）。
+ */
+const restrictedStatuses = new Set([401, 403, 429]);
+
 /** タイムアウト付きで1リクエストを送ります。リダイレクトは追跡します。 */
 async function request(url, method) {
   const controller = new AbortController();
@@ -52,10 +58,12 @@ async function request(url, method) {
 
 /**
  * 1つのURLの到達性を判定します。HEADを拒否するサイトが多いため、2xx以外はGETで確認し直します。
+ * 401/403/429（自動確認の拒否）は、リンク切れと区別して restricted として返します。
  * GETのレスポンスボディは読まないため、接続が保持されないよう破棄してから次へ進みます。
  */
 async function probe(url) {
   let lastError = "";
+  let restricted = null;
   for (let attempt = 1; attempt <= attemptsPerLink; attempt += 1) {
     for (const method of ["HEAD", "GET"]) {
       try {
@@ -64,11 +72,16 @@ async function probe(url) {
         await response.body?.cancel().catch(() => {});
         if (result.ok) return result;
         lastError = `HTTP ${result.httpStatus}`;
+        if (restrictedStatuses.has(result.httpStatus)) restricted = result;
       } catch (error) {
         lastError = error instanceof Error ? error.message : String(error);
       }
     }
     if (attempt < attemptsPerLink) await wait(2000 * attempt);
+  }
+  // 拒否応答が返っている＝URLは存在する。到達不能と同じ扱いにはしません。
+  if (restricted) {
+    return { ok: false, restricted: true, httpStatus: restricted.httpStatus, finalUrl: restricted.finalUrl, checkMethod: restricted.method, error: `HTTP ${restricted.httpStatus}（自動確認を拒否）` };
   }
   return { ok: false, error: lastError || "到達できませんでした" };
 }
@@ -93,6 +106,7 @@ for (let offset = 0; offset < targets.length; offset += concurrency) {
 
 let ok = 0;
 let broken = 0;
+let restricted = 0;
 const newlyHidden = [];
 const recovered = [];
 
@@ -116,6 +130,27 @@ for (const { link, result } of results) {
       consecutiveFailures: 0,
       hidden: false,
       lastError: null,
+    };
+    continue;
+  }
+
+  if (result.restricted) {
+    // 自動確認を拒否されただけなので、失敗回数と非表示状態は据え置きます。
+    restricted += 1;
+    health.links[link.id] = {
+      url: link.url,
+      label: link.label,
+      pinned: Boolean(link.pinned),
+      checkedAt: now,
+      lastOkAt: previous.lastOkAt ?? null,
+      httpStatus: result.httpStatus,
+      checkMethod: result.checkMethod,
+      finalUrl: result.finalUrl,
+      ok: false,
+      restricted: true,
+      consecutiveFailures: previous.consecutiveFailures ?? 0,
+      hidden: Boolean(previous.hidden),
+      lastError: result.error,
     };
     continue;
   }
@@ -147,9 +182,9 @@ for (const id of Object.keys(health.links)) {
 const hidden = Object.values(health.links).filter((record) => record.hidden).length;
 health.schemaVersion = 1;
 health.lastCompletedAt = now;
-health.latestRun = { checked: results.length, ok, broken, hidden, failThreshold: threshold };
+health.latestRun = { checked: results.length, ok, restricted, broken, hidden, failThreshold: threshold };
 await fs.writeFile(healthPath, `${JSON.stringify(health, null, 2)}\n`, "utf8");
 
-console.log(JSON.stringify({ checked: results.length, ok, broken, hidden, failThreshold: threshold, newlyHidden, recovered }, null, 2));
+console.log(JSON.stringify({ checked: results.length, ok, restricted, broken, hidden, failThreshold: threshold, newlyHidden, recovered }, null, 2));
 if (newlyHidden.length > 0) process.exitCode = 3;
 else if (broken > 0) process.exitCode = 2;
