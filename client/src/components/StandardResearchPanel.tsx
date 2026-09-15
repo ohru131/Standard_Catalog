@@ -1,26 +1,29 @@
 /**
  * Style context: Quiet technical catalogue. Equations, specimen geometry, and sources are arranged as a
  * traceable reading layer after the normative test brief—not as decorative content.
+ *
+ * 参照先URLは client/src/data/links.json で一括管理し、月次のリンク死活監視で到達できなくなった
+ * 補助リンクは resolveLinks の時点で除外されます。
  */
 import { BookOpen, ExternalLink } from "lucide-react";
 import { BlockMath } from "react-katex";
 import "katex/dist/katex.min.css";
 import { getStandardResearch } from "@/data/standard-research";
+import { resolveLinks, type ResolvedLink } from "@/data/links";
 import { getSpecimenFigure, SpecimenDiagram } from "@/components/SpecimenDiagram";
 
 type StandardResearchPanelProps = {
   id: string;
   category: string;
-  source: string;
-  sourceLabel: string;
+  officialLink: ResolvedLink | null;
 };
 
-export function StandardResearchPanel({ id, category, source, sourceLabel }: StandardResearchPanelProps) {
+export function StandardResearchPanel({ id, category, officialLink }: StandardResearchPanelProps) {
   const research = getStandardResearch({ id, category });
   const specimenFigure = getSpecimenFigure({ id, category });
   const references = Array.from(new Map([
-    { label: sourceLabel, url: source, note: "本目録の公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。" },
-    ...research.references,
+    ...(officialLink ? [officialLink] : []),
+    ...resolveLinks(research.referenceLinks),
   ].map((reference) => [reference.url, reference])).values());
 
   return <>
@@ -36,7 +39,7 @@ export function StandardResearchPanel({ id, category, source, sourceLabel }: Sta
       </div>
       <p className="equation-note">代表式は結果の意味を読むための補助です。試験片固有の幾何学関数、係数、単位、有効性条件及び計算法は、必ず適用する最新版の規格本文を優先してください。</p>
     </section>
-    {specimenFigure && <SpecimenDiagram figure={specimenFigure} sourceUrl={source} sourceLabel={sourceLabel} />}
+    {specimenFigure && officialLink && <SpecimenDiagram figure={specimenFigure} sourceUrl={officialLink.url} sourceLabel={officialLink.label} />}
     <section className="reference-list" aria-labelledby="reference-list-title">
       <div className="reference-list-heading"><div><p className="eyebrow">REFERENCES</p><h3 id="reference-list-title">参考文献・情報参照元</h3></div><BookOpen size={18} aria-hidden="true" /></div>
       <ol>

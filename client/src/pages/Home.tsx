@@ -8,8 +8,9 @@
  */
 import { useMemo, useState, type KeyboardEvent } from "react";
 import catalogueMonitorData from "@/data/catalogue-monitor.json";
+import { formatLinkCheckDate, getOfficialLink, getRelatedLinks, linkHealthSummary } from "@/data/links";
 import { StandardResearchPanel } from "@/components/StandardResearchPanel";
-import { ArrowUpRight, Check, ChevronRight, Filter, FlaskConical, Search, SlidersHorizontal, X } from "lucide-react";
+import { ArrowUpRight, Check, ChevronRight, Filter, FlaskConical, Link as LinkIcon, Search, SlidersHorizontal, X } from "lucide-react";
 
 type Authority = "ASTM" | "ISO" | "JIS";
 
@@ -31,8 +32,6 @@ type Standard = {
   relation: string;
   summary: string;
   notes: string[];
-  source: string;
-  sourceLabel: string;
   status?: "new" | "reference";
 };
 
@@ -113,8 +112,6 @@ const standards: Standard[] = [
     relation: "JIS Z 2289と同じ軸力制御疲労の試験領域を扱いますが、試験片形状や報告様式には相違があるため、適用条件は原典で確認します。",
     summary: "応力寿命（S–N）データの取得に用いられる、金属材料の軸方向・一定振幅疲労試験の実務的な入口です。",
     notes: ["一定振幅の軸方向負荷", "金属材料の疲労特性", "S–Nデータの取得"],
-    source: "https://store.astm.org/e0466-21.html",
-    sourceLabel: "ASTM E466-21 個別規格ページ",
   },
   {
     id: "astm-e606",
@@ -130,8 +127,6 @@ const standards: Standard[] = [
     relation: "JIS Z 2279は高温域の低サイクル疲労を扱う関連JISですが、対象温度域や試験片形状が完全に一致するわけではありません。",
     summary: "塑性ひずみを伴う繰返し負荷を対象に、ひずみ制御で疲労応答を評価するための代表的な試験方法です。",
     notes: ["ひずみ制御", "低サイクル領域", "応力–ひずみ応答"],
-    source: "https://store.astm.org/e0606_e0606m-21.html",
-    sourceLabel: "ASTM E606/E606M-21 個別規格ページ",
   },
   {
     id: "astm-e647",
@@ -147,8 +142,6 @@ const standards: Standard[] = [
     relation: "JIS対応はこの一覧では未収載。",
     summary: "応力拡大係数範囲に対する疲労き裂進展速度を扱う、破壊力学ベースの評価規格です。",
     notes: ["疲労き裂進展", "破壊力学", "き裂成長速度"],
-    source: "https://store.astm.org/e0647-24.html",
-    sourceLabel: "ASTM E647-24 個別規格ページ",
   },
   {
     id: "astm-e467",
@@ -164,8 +157,6 @@ const standards: Standard[] = [
     relation: "JIS Z 2289等の軸力制御疲労試験を実施する前提として、試験系の動的精度を確認する関連規格です。",
     summary: "試験結果の前提となる、軸疲労試験システムが与える動的力を検証するための実務規格です。",
     notes: ["試験システム", "動的力", "一定振幅の検証"],
-    source: "https://store.astm.org/e0467-21.html",
-    sourceLabel: "ASTM E467-21 個別規格ページ",
   },
   {
     id: "astm-e468",
@@ -181,8 +172,6 @@ const standards: Standard[] = [
     relation: "JIS Z 2289等で得た疲労試験結果を、比較可能な形式で整理・提示する際の関連規格です。",
     summary: "一定振幅疲労試験の結果を比較可能な形で提示するための手引きとして参照されます。",
     notes: ["試験結果の提示", "一定振幅", "金属材料"],
-    source: "https://store.astm.org/e0468_e0468m-23a.html",
-    sourceLabel: "ASTM E468/E468M-23a 個別規格ページ",
   },
   {
     id: "astm-e2207",
@@ -198,8 +187,6 @@ const standards: Standard[] = [
     relation: "JIS対応はこの一覧では未収載。",
     summary: "軸方向とねじりを組み合わせた複合負荷下で、薄肉管試験片の疲労特性を扱います。",
     notes: ["軸ねじり", "複合負荷", "薄肉管試験片"],
-    source: "https://store.astm.org/e2207-15r21.html",
-    sourceLabel: "ASTM E2207-15(2021) 個別規格ページ",
   },
   {
     id: "astm-e2948",
@@ -215,8 +202,6 @@ const standards: Standard[] = [
     relation: "JIS Z 2274と同じ回転曲げ疲労の試験領域ですが、対象を中実丸細線に限定した規格です。",
     summary: "細線を対象とする回転曲げ疲労試験を扱い、線材の耐久評価で参照されます。",
     notes: ["回転曲げ", "細線", "繰返し曲げ"],
-    source: "https://store.astm.org/e2948-24.html",
-    sourceLabel: "ASTM E2948-24 個別規格ページ",
   },
   {
     id: "astm-e2368",
@@ -232,8 +217,6 @@ const standards: Standard[] = [
     relation: "JIS対応はこの一覧では未収載。",
     summary: "温度履歴と機械的ひずみを連成させた熱機械疲労の評価方法です。",
     notes: ["熱機械疲労", "温度–ひずみ連成", "高温環境"],
-    source: "https://store.astm.org/e2368-25.html",
-    sourceLabel: "ASTM E2368-25 個別規格ページ",
   },
   {
     id: "iso-1099",
@@ -249,8 +232,6 @@ const standards: Standard[] = [
     relation: "JIS Z 2289と同一テーマの国際規格です。対応の程度は規格票の対比表で確認してください。",
     summary: "金属材料の軸方向・軸力制御疲労試験を対象とする国際規格です。",
     notes: ["軸力制御", "一定振幅", "金属材料"],
-    source: "https://www.iso.org/standard/67847.html",
-    sourceLabel: "ISO 1099:2017 個別規格ページ",
   },
   {
     id: "iso-12106",
@@ -266,8 +247,6 @@ const standards: Standard[] = [
     relation: "JIS Z 2279と試験領域が重なる高温低サイクル疲労の関連JISですが、内容は完全には一致しません。",
     summary: "一軸変形試験片のひずみ制御疲労試験を扱う、低サイクル疲労で参照される国際規格です。",
     notes: ["軸ひずみ制御", "低サイクル疲労", "一軸変形"],
-    source: "https://www.iso.org/standard/64687.html",
-    sourceLabel: "ISO 12106:2017 個別規格ページ",
   },
   {
     id: "iso-1143",
@@ -283,8 +262,6 @@ const standards: Standard[] = [
     relation: "JIS Z 2274との整合作業が公開されていますが、対応の程度は原規格票で確認する必要があります。",
     summary: "金属材料の回転棒曲げ疲労試験を対象とし、室温または高温での試験に用いられます。",
     notes: ["回転棒曲げ", "金属材料", "室温・高温"],
-    source: "https://www.iso.org/standard/79575.html",
-    sourceLabel: "ISO 1143:2021 個別規格ページ",
   },
   {
     id: "iso-12111",
@@ -300,8 +277,6 @@ const standards: Standard[] = [
     relation: "ASTM E2368と同一試験領域。",
     summary: "ひずみ制御下での一軸金属試験片を対象とする熱機械疲労試験の方法です。",
     notes: ["熱機械疲労", "ひずみ制御", "温度履歴"],
-    source: "https://www.iso.org/standard/45583.html",
-    sourceLabel: "ISO 12111:2011 個別規格ページ",
   },
   {
     id: "jis-z2289",
@@ -317,8 +292,6 @@ const standards: Standard[] = [
     relation: "ISO 1099に対応する国内規格ですが、採用の程度は規格票の対比表で確認してください。",
     summary: "意図的に応力集中部を導入しない金属試験片について、軸方向・一定振幅の軸力制御疲労試験条件を規定します。",
     notes: ["2026年版", "軸力制御", "室温・高温"],
-    source: "https://webdesk.jsa.or.jp/books/W11M0090/?bunsyo_id=JIS%20Z%202289:2026",
-    sourceLabel: "JSA Webdesk",
     status: "new",
   },
   {
@@ -335,8 +308,6 @@ const standards: Standard[] = [
     relation: "ISO 1143への整合作業が公開されています。詳細な対応関係は原典で確認してください。",
     summary: "金属材料について、空気中で室温または高温における回転曲げ疲労試験方法を扱います。",
     notes: ["回転曲げ", "室温・高温", "金属材料"],
-    source: "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+Z+2274%3A2024",
-    sourceLabel: "JIS Z 2274:2024 個別規格ページ",
   },
   {
     id: "jis-z2279",
@@ -352,8 +323,6 @@ const standards: Standard[] = [
     relation: "ISO 12106と試験領域が重なる関連規格です。新版の状況や対比関係は原典で確認します。",
     summary: "高温における低サイクル疲労寿命を求める、一定ひずみ範囲制御下の一軸引張–圧縮疲労試験方法です。",
     notes: ["高温", "低サイクル疲労", "ひずみ範囲制御"],
-    source: "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+Z+2279%3A1992",
-    sourceLabel: "JSA Webdesk",
     status: "reference",
   },
   {
@@ -371,8 +340,6 @@ const standards: Standard[] = [
     relation: "JIS対応はこの一覧では未収載。",
     summary: "衝撃加振による共振を用いて、弾性材料の動的ヤング率、剛性率およびポアソン比を測定する試験方法です。",
     notes: ["衝撃加振", "共振周波数", "動的弾性率"],
-    source: "https://store.astm.org/e1876-22.html",
-    sourceLabel: "ASTM E1876-22 個別規格ページ",
   },
   {
     id: "astm-e756",
@@ -389,8 +356,6 @@ const standards: Standard[] = [
     relation: "JIS対応はこの一覧では未収載。",
     summary: "損失係数とヤング率又はせん断弾性率を通じて、材料の振動減衰特性を評価する試験方法です。",
     notes: ["損失係数", "制振設計", "50–5000 Hz"],
-    source: "https://www.astm.org/e0756-05r17.html",
-    sourceLabel: "ASTM E756-05(2017) 個別規格ページ",
   },
   {
     id: "astm-d4065",
@@ -407,8 +372,6 @@ const standards: Standard[] = [
     relation: "ISO 6721及びJIS K 7244系列と近接する動的粘弾性の試験領域を扱う実務指針です。",
     summary: "温度、周波数又は時間に対する弾性率・損失弾性率の変化を通じて、プラスチックの動的機械特性を評価します。",
     notes: ["DMA", "貯蔵・損失弾性率", "プラスチック"],
-    source: "https://store.astm.org/d4065-20.html",
-    sourceLabel: "ASTM D4065-20 個別規格ページ",
   },
   {
     id: "iso-6721-1",
@@ -425,8 +388,6 @@ const standards: Standard[] = [
     relation: "JIS K 7244-1に対応する共通原則です。採用の程度は原規格票で確認してください。",
     summary: "線形粘弾性領域における硬質プラスチックの動的機械特性を測定するための一般原則を定めます。",
     notes: ["線形粘弾性", "硬質プラスチック", "一般原則"],
-    source: "https://www.iso.org/standard/73142.html",
-    sourceLabel: "ISO 6721-1:2019 個別規格ページ",
   },
   {
     id: "iso-6721-2",
@@ -443,8 +404,6 @@ const standards: Standard[] = [
     relation: "JIS K 7244-2と同一のねじり振子法を扱う関連規格です。対応の程度は原典で確認します。",
     summary: "ねじり振子法によって、プラスチックのねじり弾性率の貯蔵成分・損失成分を温度の関数として測定します。",
     notes: ["ねじり振子", "貯蔵・損失成分", "温度依存"],
-    source: "https://www.iso.org/standard/73143.html",
-    sourceLabel: "ISO 6721-2:2019 個別規格ページ",
   },
   {
     id: "jis-k7244-1",
@@ -461,8 +420,6 @@ const standards: Standard[] = [
     relation: "ISO 6721-1に対応する国内規格です。現行版との対比は規格票で確認してください。",
     summary: "硬質プラスチックの線形粘弾性挙動の範囲で動的機械特性を試験する際の、用語と共通事項を扱います。",
     notes: ["JIS K 7244系列", "線形粘弾性", "通則"],
-    source: "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+K+7244-1%3A1998",
-    sourceLabel: "JIS K 7244-1:1998 個別規格ページ",
     status: "reference",
   },
   {
@@ -480,8 +437,6 @@ const standards: Standard[] = [
     relation: "ISO 6721-2と同一のねじり振子法を扱う国内規格です。現行版との対比は原典で確認します。",
     summary: "ねじり振子法を用いて、プラスチックの動的機械特性を測定するための試験方法です。",
     notes: ["ねじり振子", "動的粘弾性", "プラスチック"],
-    source: "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+K+7244-2%3A1998",
-    sourceLabel: "JIS K 7244-2:1998 個別規格ページ",
     status: "reference",
   },
   {
@@ -499,8 +454,6 @@ const standards: Standard[] = [
     relation: "ISO 6721系列に関連。対比と版の状況は原典確認。",
     summary: "主に0.01 Hz〜100 Hzの周波数範囲で、ポリマーの引張複素弾性率の成分を非共振強制振動法で測定します。",
     notes: ["引張振動", "非共振法", "0.01–100 Hz"],
-    source: "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+K+7244-4%3A1999",
-    sourceLabel: "JIS K 7244-4:1999 個別規格ページ",
     status: "reference",
   },
   {
@@ -517,8 +470,6 @@ const standards: Standard[] = [
     relation: "ASTM E647と同一試験領域。対応関係は原典で確認。",
     summary: "金属材料の疲労き裂進展速度を、応力拡大係数範囲との関係で評価する国際規格です。",
     notes: ["疲労き裂進展", "予き裂", "da/dN–ΔK"],
-    source: "https://www.iso.org/standard/73809.html",
-    sourceLabel: "ISO 12108:2018 個別規格ページ",
   },
   {
     id: "iso-12110-1",
@@ -534,8 +485,6 @@ const standards: Standard[] = [
     relation: "単一アクチュエータの変動振幅試験を主対象とする。",
     summary: "実サービス荷重から得た負荷時系列を用い、主として力制御の変動振幅疲労試験を行うための一般原則です。",
     notes: ["変動振幅", "負荷時系列", "単一アクチュエータ"],
-    source: "https://www.iso.org/standard/54712.html",
-    sourceLabel: "ISO 12110-1:2013 個別規格ページ",
   },
   {
     id: "iso-12110-2",
@@ -551,8 +500,6 @@ const standards: Standard[] = [
     relation: "ISO 12110-1で得た変動振幅試験の負荷時系列を、解析用データへ整理するための関連規格です。",
     summary: "変動振幅疲労試験におけるサイクル計数と、関連するデータ削減方法を定めます。",
     notes: ["レインフロー計数", "データ削減", "変動振幅"],
-    source: "https://www.iso.org/standard/54713.html",
-    sourceLabel: "ISO 12110-2:2013 個別規格ページ",
   },
   {
     id: "iso-22407",
@@ -568,8 +515,6 @@ const standards: Standard[] = [
     relation: "軸試験機に平面曲げ治具を組み合わせる試験領域。",
     summary: "軸試験機で一定振幅の平面曲げ負荷を与え、金属材料の曲げ疲労寿命を評価する試験方法です。",
     notes: ["平面曲げ", "一定振幅", "軸試験機用治具"],
-    source: "https://www.iso.org/standard/73126.html",
-    sourceLabel: "ISO 22407:2021 個別規格ページ",
   },
   {
     id: "iso-23296",
@@ -585,8 +530,6 @@ const standards: Standard[] = [
     relation: "ひずみ制御を扱うASTM E2368と対をなす、力制御熱機械疲労の最新ISO規格です。高温構成・温度同期の条件を原典で確認します。",
     summary: "力制御の熱機械疲労試験について、装置、試験片、結果提示を扱う2025年版のISO規格です。",
     notes: ["2025年版", "力制御TMF", "高温・温度同期"],
-    source: "https://www.iso.org/standard/85732.html",
-    sourceLabel: "ISO 23296:2025 個別規格ページ",
     status: "new",
   },
   {
@@ -604,8 +547,6 @@ const standards: Standard[] = [
     relation: "プラスチックの一軸繰返し荷重を扱うASTM規格。",
     summary: "剛性又は半剛性プラスチックについて、引張又は圧縮の一軸繰返し負荷で動的疲労特性を求めます。",
     notes: ["プラスチック", "引張・圧縮", "一軸疲労"],
-    source: "https://store.astm.org/d7791-22.html",
-    sourceLabel: "ASTM D7791-22 個別規格ページ",
   },
   {
     id: "astm-d4482",
@@ -622,8 +563,6 @@ const standards: Standard[] = [
     relation: "JIS K 6270と同じゴムの伸長サイクル疲労を扱いますが、伸長条件や報告様式には相違があります。",
     summary: "未切欠きゴム試験片に引張ひずみサイクルを与え、破断までの疲労寿命を比較評価します。",
     notes: ["ゴム", "伸長サイクル", "疲労寿命"],
-    source: "https://store.astm.org/d4482-11r21.html",
-    sourceLabel: "ASTM D4482-11(2021) 個別規格ページ",
   },
   {
     id: "astm-f2345",
@@ -640,8 +579,6 @@ const standards: Standard[] = [
     relation: "生理食塩水環境と専用のコーン治具を要する部品試験。",
     summary: "人工股関節用のセラミック製モジュラー大腿骨頭について、繰返し荷重下の疲労強度を比較評価します。",
     notes: ["医療用部品", "専用治具", "生理食塩水環境"],
-    source: "https://store.astm.org/f2345-21.html",
-    sourceLabel: "ASTM F2345-21 個別規格ページ",
   },
   {
     id: "jis-k6270",
@@ -658,8 +595,6 @@ const standards: Standard[] = [
     relation: "ASTM D4482と近接するゴムの繰返し引張疲労試験領域を扱う国内規格です。",
     summary: "加硫ゴム及び熱可塑性ゴムの定ひずみ引張疲労特性を求めるための試験方法です。",
     notes: ["ゴム", "定ひずみ", "引張疲労"],
-    source: "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+K+6270%3A2018",
-    sourceLabel: "JIS K 6270:2018 個別規格ページ",
   },
   {
     id: "jis-k6394",
@@ -676,8 +611,6 @@ const standards: Standard[] = [
     relation: "ゴムの動的性質評価に関する一般指針。実施には適切な動的治具が必要。",
     summary: "ゴム及び熱可塑性ゴムの温度上昇、動的クリープ、圧縮永久ひずみなどを含む動的性質評価の一般指針です。",
     notes: ["ゴム", "動的剛性", "専用治具"],
-    source: "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+K+6394%3A2007",
-    sourceLabel: "JIS K 6394:2007 個別規格ページ",
     status: "reference",
   },
   {
@@ -695,8 +628,6 @@ const standards: Standard[] = [
     relation: "ISO 22407と同じ平面曲げ疲労の領域ですが、セラミックス用の四点曲げ治具が別途必要です。",
     summary: "室温・大気中で、ファインセラミックスの曲げ疲労を四点曲げ構成で評価する試験方法です。",
     notes: ["ファインセラミックス", "四点曲げ", "室温"],
-    source: "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+R+1621%3A2008",
-    sourceLabel: "JIS R 1621:2008 個別規格ページ",
     status: "reference",
   },
   {
@@ -714,8 +645,6 @@ const standards: Standard[] = [
     relation: "生体材料に特有の環境・材料状態を管理する材料疲労試験規格。",
     summary: "金属系生体材料の疲労特性を、繰返し荷重条件下で評価するための試験方法です。",
     notes: ["生体材料", "繰返し荷重", "試験環境"],
-    source: "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+T+0309%3A2009",
-    sourceLabel: "JIS T 0309:2009 個別規格ページ",
     status: "reference",
   },
   {
@@ -733,8 +662,6 @@ const standards: Standard[] = [
     relation: "ISO 12108が扱う一般的な金属き裂進展試験に、生体材料特有の試験環境の考慮を加えた規格です。",
     summary: "金属系生体材料について、切欠き感受性と疲労き裂進展特性を評価するための試験方法です。",
     notes: ["生体材料", "切欠き", "疲労き裂進展"],
-    source: "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+T+0310%3A2009",
-    sourceLabel: "JIS T 0310:2009 個別規格ページ",
     status: "reference",
   },
   {
@@ -752,8 +679,6 @@ const standards: Standard[] = [
     relation: "ISO 12135と同様にK・J・CTOD・R曲線を扱う統一的な関連規格です。試験片形状や有効性判定の細部は原典で比較します。",
     summary: "金属材料のK、J、CTOD及びR曲線を、疲労予き裂CT又は曲げ試験片で求める代表的な破壊靭性規格です。",
     notes: ["K・J・CTOD", "CT／SE(B)試験片", "疲労予き裂"],
-    source: "https://store.astm.org/e1820-25.html",
-    sourceLabel: "ASTM E1820-25 個別規格ページ",
     status: "new",
   },
   {
@@ -771,8 +696,6 @@ const standards: Standard[] = [
     relation: "弾塑性域まで扱うISO 12135に対し、平面ひずみ条件下のKICに特化した関連規格です。旧JIS G 0564は廃止済みのため掲載していません。",
     summary: "疲労予き裂試験片を用い、平面ひずみかつ線形弾性条件で金属材料のKICを求めます。",
     notes: ["KIC", "平面ひずみ", "有効性判定"],
-    source: "https://store.astm.org/e0399-24.html",
-    sourceLabel: "ASTM E399-24 個別規格ページ",
   },
   {
     id: "astm-e1921",
@@ -789,8 +712,6 @@ const standards: Standard[] = [
     relation: "フェライト鋼のへき開破壊・遷移温度域を統計的に補完する規格で、ISO 12135の適用上の留意事項と関連します。",
     summary: "フェライト鋼のKJcデータを統計処理し、遷移温度域のマスターカーブ基準温度T0を求めます。",
     notes: ["KJc", "T0", "温度環境・複数試験片"],
-    source: "https://store.astm.org/e1921-25a.html",
-    sourceLabel: "ASTM E1921-25A 個別規格ページ",
     status: "new",
   },
   {
@@ -808,8 +729,6 @@ const standards: Standard[] = [
     relation: "ASTM E1820と同様にK・CTOD・J・R曲線を扱う国際的な関連規格です。溶接部を対象とする場合はISO 15653を併用します。",
     summary: "均質な金属材料について、準静的なK、CTOD、J及びR曲線を求める統一試験方法です。",
     notes: ["K・CTOD・J・R曲線", "準静的", "疲労予き裂"],
-    source: "https://www.iso.org/standard/78208.html",
-    sourceLabel: "ISO 12135:2021 個別規格ページ",
   },
   {
     id: "iso-15653",
@@ -826,8 +745,6 @@ const standards: Standard[] = [
     relation: "母材の共通事項はISO 12135を併用。溶接金属又は熱影響部を狙う試験片の位置決めが重要。",
     summary: "溶接金属又は熱影響部を対象に、K、CTOD及びJによる準静的破壊靭性の点値を求めます。",
     notes: ["溶接金属・HAZ", "CTOD・J・K", "疲労予き裂"],
-    source: "https://www.iso.org/standard/70865.html",
-    sourceLabel: "ISO 15653:2018 個別規格ページ",
   },
   {
     id: "astm-c1421",
@@ -844,8 +761,6 @@ const standards: Standard[] = [
     relation: "JIS R 1607と同じ室温セラミックス破壊靭性を扱いますが、予き裂又はシェブロンノッチの方法・試験片条件は原典で比較します。",
     summary: "先進セラミックスのKICを、予き裂梁、表面き裂曲げ又はシェブロンノッチ梁で求めます。",
     notes: ["セラミックスKIC", "曲げ治具", "予き裂・ノッチ"],
-    source: "https://store.astm.org/c1421-18r25.html",
-    sourceLabel: "ASTM C1421-18(2025) 個別規格ページ",
     status: "new",
   },
   {
@@ -863,8 +778,6 @@ const standards: Standard[] = [
     relation: "ISO 13586と同一主題だが技術内容は異なる。JIS対応はこの一覧では未収載。",
     summary: "プラスチックのKICとGICを、単一端切欠き曲げ又はCT試験片で求めます。",
     notes: ["プラスチックKIC・GIC", "SENB・CT", "平面ひずみ"],
-    source: "https://store.astm.org/d5045-14r22.html",
-    sourceLabel: "ASTM D5045-14(2022) 個別規格ページ",
   },
   {
     id: "jis-r1607",
@@ -881,8 +794,6 @@ const standards: Standard[] = [
     relation: "ASTM C1421と同じ室温セラミックスKICを扱う関連規格です。連続繊維強化材及び多孔体には適用されません。",
     summary: "緻密質ファインセラミックスの室温破壊靭性を、規定した予き裂又はノッチ方法で測定します。",
     notes: ["ファインセラミックス", "室温KIC", "曲げ試験"],
-    source: "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+R+1607%3A2015",
-    sourceLabel: "JIS R 1607:2015 個別規格ページ",
   },
 ];
 
@@ -1119,6 +1030,8 @@ export default function Home() {
 
   const selected = filteredStandards.find((standard) => standard.id === selectedId) ?? filteredStandards[0] ?? standards[0];
   const selectedMonitor = catalogueMonitor.records[selected.id];
+  const officialLink = getOfficialLink(selected.id);
+  const relatedLinks = getRelatedLinks(selected);
   const detailGuide = getTestGuide(selected);
   const selectedMaterials = selected.materials ?? [selected.material];
   const sameThemeStandards = standards.filter((standard) => standard.category === selected.category && standard.id !== selected.id && (standard.materials ?? [standard.material]).some((material) => selectedMaterials.includes(material)));
@@ -1199,7 +1112,7 @@ export default function Home() {
 
           <article className="detail-panel" id="catalogue-panel-detail" role="tabpanel" aria-labelledby="catalogue-tab-detail" hidden={view !== "detail"}>
             <div className="detail-topline"><span>SELECTED STANDARD</span><span>{selected.edition}</span></div>
-            <div className="detail-code"><AuthorityPill authority={selected.authority} /><a className="detail-code-link" href={selected.source} target="_blank" rel="noreferrer" aria-label={`${selected.code}の公式個別規格ページを開く`} title="公式個別規格ページを開く"><code>{selected.code}</code><ArrowUpRight size={15} aria-hidden="true" /></a></div>
+            <div className="detail-code"><AuthorityPill authority={selected.authority} />{officialLink ? <a className="detail-code-link" href={officialLink.url} target="_blank" rel="noreferrer" aria-label={`${selected.code}の公式個別規格ページを開く`} title="公式個別規格ページを開く"><code>{selected.code}</code><ArrowUpRight size={15} aria-hidden="true" /></a> : <code>{selected.code}</code>}</div>
             <h2>{selected.japaneseTitle}</h2>
             <p className="detail-english">{selected.englishTitle}</p>
             <div className="official-scope">
@@ -1235,7 +1148,21 @@ export default function Home() {
               <div className="report-checklist"><h3>レポートに記載する内容</h3><ul>{detailGuide.report.map((item) => <li key={item}><Check size={14} aria-hidden="true" />{item}</li>)}</ul></div>
               <p className="test-guide-caution">{detailGuide.caution}</p>
             </section>
-            <StandardResearchPanel id={selected.id} category={selected.category} source={selected.source} sourceLabel={selected.sourceLabel} />
+            <section className="link-hub" aria-labelledby="link-hub-title">
+              <div className="link-hub-heading"><div><p className="eyebrow">REFERENCE LINKS</p><h3 id="link-hub-title">参照リンク（日本語・英語）</h3></div><LinkIcon size={18} aria-hidden="true" /></div>
+              <ul className="link-hub-list">
+                {officialLink && <li key={officialLink.url} className="link-hub-primary">
+                  <a href={officialLink.url} target="_blank" rel="noreferrer"><span className="link-lang">{officialLink.lang === "ja" ? "JA" : "EN"}</span><span className="link-label">{officialLink.label}</span><ArrowUpRight size={14} aria-hidden="true" /></a>
+                  <p>{officialLink.note}{officialLink.needsReview ? "（直近のリンク確認で到達できませんでした。公式サイトで最新のページをご確認ください。）" : ""}</p>
+                </li>}
+                {relatedLinks.map((link) => <li key={link.url}>
+                  <a href={link.url} target="_blank" rel="noreferrer"><span className="link-lang">{link.lang === "ja" ? "JA" : "EN"}</span><span className="link-label">{link.label}</span><ArrowUpRight size={14} aria-hidden="true" /></a>
+                  <p>{link.note}</p>
+                </li>)}
+              </ul>
+              <p className="link-hub-note">参照リンクは月次で自動確認し、到達できなくなった補助リンクはこの一覧から自動的に外れます（直近確認日：{formatLinkCheckDate(linkHealthSummary.lastCompletedAt)}）。</p>
+            </section>
+            <StandardResearchPanel id={selected.id} category={selected.category} officialLink={officialLink} />
           </article>
         </section>
       </main>

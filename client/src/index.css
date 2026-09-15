@@ -226,12 +226,12 @@
   /* Shared section frame: hairline top/bottom, eyebrow, title, side note. */
   /* Each block opens with one hairline and never closes with one; the space above a
      rule is its own margin, the space below is its padding. Only the last block closes. */
-  .same-theme, .test-guide, .technical-reading, .specimen-figure, .reference-list { margin-top: 30px; border-top: 1px solid var(--rule-mid); padding-top: 18px; }
+  .same-theme, .test-guide, .technical-reading, .specimen-figure, .reference-list, .link-hub { margin-top: 30px; border-top: 1px solid var(--rule-mid); padding-top: 18px; }
   .detail-panel > section:last-child { border-bottom: 1px solid var(--rule-mid); padding-bottom: 24px; }
-  .same-theme-heading, .technical-reading-heading, .specimen-figure-heading, .reference-list-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 14px; }
-  .same-theme-heading h3, .technical-reading-heading h3, .specimen-figure-heading h3, .reference-list-heading h3 { margin-top: 4px; color: var(--ink); font-family: "DM Sans", "Noto Sans JP", sans-serif; font-size: var(--t-xl); font-weight: 600; letter-spacing: -.02em; }
+  .same-theme-heading, .technical-reading-heading, .specimen-figure-heading, .reference-list-heading, .link-hub-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 14px; }
+  .same-theme-heading h3, .technical-reading-heading h3, .specimen-figure-heading h3, .reference-list-heading h3, .link-hub-heading h3 { margin-top: 4px; color: var(--ink); font-family: "DM Sans", "Noto Sans JP", sans-serif; font-size: var(--t-xl); font-weight: 600; letter-spacing: -.02em; }
   .same-theme-heading > span, .technical-reading-heading > span, .specimen-figure-heading > span { flex: 0 0 auto; border-left: 2px solid var(--accent); color: var(--accent-quiet); font-family: "IBM Plex Mono", monospace; font-size: var(--t-mono); letter-spacing: .06em; padding-left: 7px; }
-  .reference-list-heading > svg { flex: 0 0 auto; color: var(--accent); }
+  .reference-list-heading > svg, .link-hub-heading > svg { flex: 0 0 auto; color: var(--accent); }
 
   .same-theme-list { display: grid; margin-top: 12px; border-top: 1px solid var(--rule); }
   .same-theme-list button { display: grid; grid-template-columns: minmax(0, 1fr) 18px; gap: 6px 8px; width: 100%; border: 0; border-bottom: 1px solid var(--rule); background: transparent; padding: 11px 8px; color: var(--ink-2); text-align: left; transition: background var(--dur) var(--ease), box-shadow var(--dur) var(--ease); }
@@ -305,6 +305,19 @@
   .reference-list a:hover { color: var(--accent-deep); text-decoration: underline; text-underline-offset: 3px; }
   .reference-list a svg { flex: 0 0 auto; }
   .reference-list p { margin-top: 4px; color: var(--ink-3); font-size: var(--t-xs); line-height: 1.7; }
+
+  /* 参照リンク集約。日本語の情報源を先頭に並べ、月次のリンク監視で外れたものは描画されない。 */
+  .link-hub-list { display: grid; margin: 12px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--rule); }
+  .link-hub-list li { border-bottom: 1px solid var(--rule); padding: 11px 0; }
+  .link-hub-list li:last-child { border-bottom: 0; }
+  .link-hub-list a { display: inline-flex; align-items: center; gap: 7px; color: var(--accent); font-size: var(--t-base); font-weight: 600; line-height: 1.6; text-decoration: none; }
+  .link-hub-list a:hover { color: var(--accent-deep); text-decoration: underline; text-underline-offset: 3px; }
+  .link-hub-list a svg { flex: 0 0 auto; }
+  .link-hub-list p { margin-top: 4px; color: var(--ink-3); font-size: var(--t-xs); line-height: 1.7; }
+  .link-lang { flex: 0 0 auto; border: 1px solid var(--rule-strong); border-radius: 2px; padding: 1px 5px; color: var(--ink-3); font-family: "IBM Plex Mono", monospace; font-size: var(--t-mono); font-weight: 500; letter-spacing: .04em; }
+  .link-hub-primary .link-lang { border-color: var(--accent-line); color: var(--accent); }
+  .link-hub-primary .link-label { text-decoration: underline; text-underline-offset: 3px; }
+  .link-hub-note { margin-top: 12px; border-left: 2px solid var(--rule-strong); padding-left: 10px; color: var(--ink-3); font-size: var(--t-xs); line-height: 1.8; }
 
   /* --------------------------------------------------------------- motion */
   @media (prefers-reduced-motion: no-preference) {
