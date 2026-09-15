@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const cataloguePath = path.join(root, "client", "src", "pages", "Home.tsx");
 const monitorPath = path.join(root, "client", "src", "data", "catalogue-monitor.json");
+const linkRegistryPath = path.join(root, "client", "src", "data", "links.json");
 const requestTimeoutMs = 25_000;
 const isoRequestTimeoutMs = 120_000;
 const isoMetadataUrl = "https://isopublicstorageprod.blob.core.windows.net/opendata/_latest/iso_deliverables_metadata/json/iso_deliverables_metadata.jsonl";
@@ -31,13 +32,20 @@ function pageSummary(html) {
   return { title: title.slice(0, 300), summary: raw.slice(0, 1_600), fingerprint: createHash("sha256").update(raw).digest("hex") };
 }
 
-function standardsFromSource(source) {
+/** 規格番号は目録（Home.tsx）から、公式ページURLはリンクレジストリ（links.json）から取得します。 */
+function standardsFromSource(source, registry) {
   const start = source.indexOf("const standards: Standard[]");
   const end = source.indexOf("const categories", start);
   const section = source.slice(start, end);
+  const linksById = new Map(registry.links.map((link) => [link.id, link]));
   const records = [];
-  const pattern = /id:\s*"([^"]+)"[\s\S]*?code:\s*"([^"]+)"[\s\S]*?source:\s*"([^"]+)"/g;
-  for (const match of section.matchAll(pattern)) records.push({ id: match[1], code: match[2], source: match[3] });
+  const pattern = /id:\s*"([^"]+)"[\s\S]*?code:\s*"([^"]+)"/g;
+  for (const match of section.matchAll(pattern)) {
+    const entry = registry.standardLinks[match[1]];
+    const official = entry ? linksById.get(entry.official) : undefined;
+    if (!official) continue;
+    records.push({ id: match[1], code: match[2], source: official.url });
+  }
   return records;
 }
 
@@ -135,9 +143,14 @@ async function checkDirectRecord(record) {
 }
 
 const now = new Date().toISOString();
-const [catalogueSource, monitorSource] = await Promise.all([fs.readFile(cataloguePath, "utf8"), fs.readFile(monitorPath, "utf8")]);
-const allStandards = standardsFromSource(catalogueSource);
-if (allStandards.length < 1) throw new Error("Home.tsxから監視対象規格を抽出できませんでした。");
+const [catalogueSource, monitorSource, linkRegistrySource] = await Promise.all([
+  fs.readFile(cataloguePath, "utf8"),
+  fs.readFile(monitorPath, "utf8"),
+  fs.readFile(linkRegistryPath, "utf8"),
+]);
+const linkRegistry = JSON.parse(linkRegistrySource);
+const allStandards = standardsFromSource(catalogueSource, linkRegistry);
+if (allStandards.length < 1) throw new Error("Home.tsxとlinks.jsonから監視対象規格を抽出できませんでした。");
 const requestedLimit = Number.parseInt(process.env.STANDARDS_CHECK_LIMIT ?? "", 10);
 const standards = Number.isFinite(requestedLimit) && requestedLimit > 0 ? allStandards.slice(0, requestedLimit) : allStandards;
 const monitor = JSON.parse(monitorSource);

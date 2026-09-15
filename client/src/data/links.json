@@ -1,0 +1,1035 @@
+{
+  "schemaVersion": 1,
+  "description": "規格目録で参照する全URLの一括管理レジストリ。月次のリンク死活監視（scripts/check-links.mjs）はこのファイルを唯一の入力とし、結果を client/src/data/link-health.json に記録します。",
+  "policy": {
+    "hideAfterConsecutiveFailures": 2,
+    "note": "pinned:true のリンクは一次情報のため自動非表示の対象外とし、確認が必要な状態として注記だけを表示します。"
+  },
+  "authorityLinks": {
+    "ASTM": [
+      "jsa-astm-search",
+      "astm-site"
+    ],
+    "ISO": [
+      "jsa-foreign-search",
+      "jisc-international",
+      "jisc-iso-guide",
+      "iso-site"
+    ],
+    "JIS": [
+      "jisc-jis-search",
+      "jisc-jis-reading",
+      "jsa-jis-search"
+    ]
+  },
+  "categoryLinks": {
+    "軸力制御": [
+      "jwes-fatigue-knowledge",
+      "nims-fds",
+      "jsms-fatigue"
+    ],
+    "低サイクル": [
+      "jwes-fatigue-knowledge",
+      "nims-fds",
+      "jsms-fatigue"
+    ],
+    "回転曲げ": [
+      "jwes-fatigue-knowledge",
+      "nims-fds",
+      "jsms-fatigue"
+    ],
+    "平面曲げ": [
+      "jwes-fatigue-knowledge",
+      "nims-fds",
+      "jsms-fatigue"
+    ],
+    "複合負荷": [
+      "jwes-fatigue-db",
+      "jwes-fatigue-knowledge",
+      "nims-fds",
+      "jsms-fatigue"
+    ],
+    "変動振幅": [
+      "jwes-fatigue-knowledge",
+      "nims-fds",
+      "jsms-fatigue"
+    ],
+    "熱機械疲労": [
+      "jwes-fatigue-knowledge",
+      "nims-fds",
+      "jsms-fatigue"
+    ],
+    "試験系検証": [
+      "jwes-fatigue-knowledge",
+      "nims-fds",
+      "jsms-fatigue"
+    ],
+    "データ整理": [
+      "nims-fds",
+      "jsms-fatigue"
+    ],
+    "き裂進展": [
+      "jwes-fatigue-knowledge",
+      "jsms-safety",
+      "nims-fds"
+    ],
+    "破壊靭性": [
+      "jsms-safety",
+      "jwes-fatigue-knowledge",
+      "jstage"
+    ],
+    "動的粘弾性": [
+      "jstage"
+    ],
+    "制振・減衰": [
+      "jstage"
+    ],
+    "動的弾性率": [
+      "jstage"
+    ]
+  },
+  "standardLinks": {
+    "astm-e466": {
+      "official": "official-astm-e466",
+      "related": [
+        "jwes-fatigue-knowledge",
+        "nims-fds",
+        "jsms-fatigue"
+      ]
+    },
+    "astm-e606": {
+      "official": "official-astm-e606",
+      "related": [
+        "jwes-fatigue-knowledge",
+        "nims-fds",
+        "jsms-fatigue"
+      ]
+    },
+    "astm-e647": {
+      "official": "official-astm-e647",
+      "related": [
+        "jwes-fatigue-knowledge",
+        "jsms-safety",
+        "nims-fds"
+      ]
+    },
+    "astm-e467": {
+      "official": "official-astm-e467",
+      "related": [
+        "jwes-fatigue-knowledge",
+        "nims-fds",
+        "jsms-fatigue"
+      ]
+    },
+    "astm-e468": {
+      "official": "official-astm-e468",
+      "related": [
+        "nims-fds",
+        "jsms-fatigue"
+      ]
+    },
+    "astm-e2207": {
+      "official": "official-astm-e2207",
+      "related": [
+        "jwes-fatigue-db",
+        "jwes-fatigue-knowledge",
+        "nims-fds",
+        "jsms-fatigue"
+      ]
+    },
+    "astm-e2948": {
+      "official": "official-astm-e2948",
+      "related": [
+        "jwes-fatigue-knowledge",
+        "nims-fds",
+        "jsms-fatigue"
+      ]
+    },
+    "astm-e2368": {
+      "official": "official-astm-e2368",
+      "related": [
+        "jwes-fatigue-knowledge",
+        "nims-fds",
+        "jsms-fatigue"
+      ]
+    },
+    "iso-1099": {
+      "official": "official-iso-1099",
+      "related": [
+        "jwes-fatigue-knowledge",
+        "nims-fds",
+        "jsms-fatigue"
+      ]
+    },
+    "iso-12106": {
+      "official": "official-iso-12106",
+      "related": [
+        "jwes-fatigue-knowledge",
+        "nims-fds",
+        "jsms-fatigue"
+      ]
+    },
+    "iso-1143": {
+      "official": "official-iso-1143",
+      "related": [
+        "jwes-fatigue-knowledge",
+        "nims-fds",
+        "jsms-fatigue"
+      ]
+    },
+    "iso-12111": {
+      "official": "official-iso-12111",
+      "related": [
+        "jwes-fatigue-knowledge",
+        "nims-fds",
+        "jsms-fatigue"
+      ]
+    },
+    "jis-z2289": {
+      "official": "official-jis-z2289",
+      "related": [
+        "jwes-fatigue-knowledge",
+        "nims-fds",
+        "jsms-fatigue"
+      ]
+    },
+    "jis-z2274": {
+      "official": "official-jis-z2274",
+      "related": [
+        "jwes-fatigue-knowledge",
+        "nims-fds",
+        "jsms-fatigue"
+      ]
+    },
+    "jis-z2279": {
+      "official": "official-jis-z2279",
+      "related": [
+        "jwes-fatigue-knowledge",
+        "nims-fds",
+        "jsms-fatigue"
+      ]
+    },
+    "astm-e1876": {
+      "official": "official-astm-e1876",
+      "related": [
+        "nims-dice",
+        "jstage"
+      ]
+    },
+    "astm-e756": {
+      "official": "official-astm-e756",
+      "related": [
+        "jstage"
+      ]
+    },
+    "astm-d4065": {
+      "official": "official-astm-d4065",
+      "related": [
+        "srij",
+        "jstage"
+      ]
+    },
+    "iso-6721-1": {
+      "official": "official-iso-6721-1",
+      "related": [
+        "jstage"
+      ]
+    },
+    "iso-6721-2": {
+      "official": "official-iso-6721-2",
+      "related": [
+        "jstage"
+      ]
+    },
+    "jis-k7244-1": {
+      "official": "official-jis-k7244-1",
+      "related": [
+        "jstage"
+      ]
+    },
+    "jis-k7244-2": {
+      "official": "official-jis-k7244-2",
+      "related": [
+        "jstage"
+      ]
+    },
+    "jis-k7244-4": {
+      "official": "official-jis-k7244-4",
+      "related": [
+        "jstage"
+      ]
+    },
+    "iso-12108": {
+      "official": "official-iso-12108",
+      "related": [
+        "jwes-fatigue-knowledge",
+        "jsms-safety",
+        "nims-fds"
+      ]
+    },
+    "iso-12110-1": {
+      "official": "official-iso-12110-1",
+      "related": [
+        "jwes-fatigue-knowledge",
+        "nims-fds",
+        "jsms-fatigue"
+      ]
+    },
+    "iso-12110-2": {
+      "official": "official-iso-12110-2",
+      "related": [
+        "jwes-fatigue-knowledge",
+        "nims-fds",
+        "jsms-fatigue"
+      ]
+    },
+    "iso-22407": {
+      "official": "official-iso-22407",
+      "related": [
+        "jwes-fatigue-knowledge",
+        "nims-fds",
+        "jsms-fatigue"
+      ]
+    },
+    "iso-23296": {
+      "official": "official-iso-23296",
+      "related": [
+        "jwes-fatigue-knowledge",
+        "nims-fds",
+        "jsms-fatigue"
+      ]
+    },
+    "astm-d7791": {
+      "official": "official-astm-d7791",
+      "related": [
+        "jstage",
+        "jwes-fatigue-knowledge",
+        "nims-fds",
+        "jsms-fatigue"
+      ]
+    },
+    "astm-d4482": {
+      "official": "official-astm-d4482",
+      "related": [
+        "srij",
+        "jwes-fatigue-knowledge",
+        "nims-fds",
+        "jsms-fatigue"
+      ]
+    },
+    "astm-f2345": {
+      "official": "official-astm-f2345",
+      "related": [
+        "jstage",
+        "jwes-fatigue-knowledge",
+        "nims-fds",
+        "jsms-fatigue"
+      ]
+    },
+    "jis-k6270": {
+      "official": "official-jis-k6270",
+      "related": [
+        "srij",
+        "jwes-fatigue-knowledge",
+        "nims-fds",
+        "jsms-fatigue"
+      ]
+    },
+    "jis-k6394": {
+      "official": "official-jis-k6394",
+      "related": [
+        "srij",
+        "jstage"
+      ]
+    },
+    "jis-r1621": {
+      "official": "official-jis-r1621",
+      "related": [
+        "ceramic-society",
+        "jwes-fatigue-knowledge",
+        "nims-fds",
+        "jsms-fatigue"
+      ]
+    },
+    "jis-t0309": {
+      "official": "official-jis-t0309",
+      "related": [
+        "jstage",
+        "jwes-fatigue-knowledge",
+        "nims-fds",
+        "jsms-fatigue"
+      ]
+    },
+    "jis-t0310": {
+      "official": "official-jis-t0310",
+      "related": [
+        "jstage",
+        "jwes-fatigue-knowledge",
+        "jsms-safety",
+        "nims-fds"
+      ]
+    },
+    "astm-e1820": {
+      "official": "official-astm-e1820",
+      "related": [
+        "jsms-safety",
+        "jwes-fatigue-knowledge",
+        "jstage"
+      ]
+    },
+    "astm-e399": {
+      "official": "official-astm-e399",
+      "related": [
+        "jsms-safety",
+        "jwes-fatigue-knowledge",
+        "jstage"
+      ]
+    },
+    "astm-e1921": {
+      "official": "official-astm-e1921",
+      "related": [
+        "jsms-safety",
+        "jwes-fatigue-knowledge",
+        "jstage"
+      ]
+    },
+    "iso-12135": {
+      "official": "official-iso-12135",
+      "related": [
+        "jsms-safety",
+        "jwes-fatigue-knowledge",
+        "jstage"
+      ]
+    },
+    "iso-15653": {
+      "official": "official-iso-15653",
+      "related": [
+        "jsms-safety",
+        "jwes-fatigue-knowledge",
+        "jstage"
+      ]
+    },
+    "astm-c1421": {
+      "official": "official-astm-c1421",
+      "related": [
+        "ceramic-society",
+        "jsms-safety",
+        "jwes-fatigue-knowledge",
+        "jstage"
+      ]
+    },
+    "astm-d5045": {
+      "official": "official-astm-d5045",
+      "related": [
+        "jstage",
+        "jsms-safety",
+        "jwes-fatigue-knowledge"
+      ]
+    },
+    "jis-r1607": {
+      "official": "official-jis-r1607",
+      "related": [
+        "ceramic-society",
+        "jsms-safety",
+        "jwes-fatigue-knowledge",
+        "jstage"
+      ]
+    }
+  },
+  "links": [
+    {
+      "id": "official-astm-e466",
+      "url": "https://store.astm.org/e0466-21.html",
+      "label": "ASTM E466-21 個別規格ページ",
+      "lang": "en",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-astm-e606",
+      "url": "https://store.astm.org/e0606_e0606m-21.html",
+      "label": "ASTM E606/E606M-21 個別規格ページ",
+      "lang": "en",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-astm-e647",
+      "url": "https://store.astm.org/e0647-24.html",
+      "label": "ASTM E647-24 個別規格ページ",
+      "lang": "en",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-astm-e467",
+      "url": "https://store.astm.org/e0467-21.html",
+      "label": "ASTM E467-21 個別規格ページ",
+      "lang": "en",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-astm-e468",
+      "url": "https://store.astm.org/e0468_e0468m-23a.html",
+      "label": "ASTM E468/E468M-23a 個別規格ページ",
+      "lang": "en",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-astm-e2207",
+      "url": "https://store.astm.org/e2207-15r21.html",
+      "label": "ASTM E2207-15(2021) 個別規格ページ",
+      "lang": "en",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-astm-e2948",
+      "url": "https://store.astm.org/e2948-24.html",
+      "label": "ASTM E2948-24 個別規格ページ",
+      "lang": "en",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-astm-e2368",
+      "url": "https://store.astm.org/e2368-25.html",
+      "label": "ASTM E2368-25 個別規格ページ",
+      "lang": "en",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-iso-1099",
+      "url": "https://www.iso.org/standard/67847.html",
+      "label": "ISO 1099:2017 個別規格ページ",
+      "lang": "en",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-iso-12106",
+      "url": "https://www.iso.org/standard/64687.html",
+      "label": "ISO 12106:2017 個別規格ページ",
+      "lang": "en",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-iso-1143",
+      "url": "https://www.iso.org/standard/79575.html",
+      "label": "ISO 1143:2021 個別規格ページ",
+      "lang": "en",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-iso-12111",
+      "url": "https://www.iso.org/standard/45583.html",
+      "label": "ISO 12111:2011 個別規格ページ",
+      "lang": "en",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-jis-z2289",
+      "url": "https://webdesk.jsa.or.jp/books/W11M0090/?bunsyo_id=JIS%20Z%202289:2026",
+      "label": "JIS Z 2289:2026 個別規格ページ（JSA Webdesk）",
+      "lang": "ja",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-jis-z2274",
+      "url": "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+Z+2274%3A2024",
+      "label": "JIS Z 2274:2024 個別規格ページ",
+      "lang": "ja",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-jis-z2279",
+      "url": "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+Z+2279%3A1992",
+      "label": "JIS Z 2279:1992 個別規格ページ（JSA Webdesk）",
+      "lang": "ja",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-astm-e1876",
+      "url": "https://store.astm.org/e1876-22.html",
+      "label": "ASTM E1876-22 個別規格ページ",
+      "lang": "en",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-astm-e756",
+      "url": "https://www.astm.org/e0756-05r17.html",
+      "label": "ASTM E756-05(2017) 個別規格ページ",
+      "lang": "en",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-astm-d4065",
+      "url": "https://store.astm.org/d4065-20.html",
+      "label": "ASTM D4065-20 個別規格ページ",
+      "lang": "en",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-iso-6721-1",
+      "url": "https://www.iso.org/standard/73142.html",
+      "label": "ISO 6721-1:2019 個別規格ページ",
+      "lang": "en",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-iso-6721-2",
+      "url": "https://www.iso.org/standard/73143.html",
+      "label": "ISO 6721-2:2019 個別規格ページ",
+      "lang": "en",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-jis-k7244-1",
+      "url": "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+K+7244-1%3A1998",
+      "label": "JIS K 7244-1:1998 個別規格ページ",
+      "lang": "ja",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-jis-k7244-2",
+      "url": "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+K+7244-2%3A1998",
+      "label": "JIS K 7244-2:1998 個別規格ページ",
+      "lang": "ja",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-jis-k7244-4",
+      "url": "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+K+7244-4%3A1999",
+      "label": "JIS K 7244-4:1999 個別規格ページ",
+      "lang": "ja",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-iso-12108",
+      "url": "https://www.iso.org/standard/73809.html",
+      "label": "ISO 12108:2018 個別規格ページ",
+      "lang": "en",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-iso-12110-1",
+      "url": "https://www.iso.org/standard/54712.html",
+      "label": "ISO 12110-1:2013 個別規格ページ",
+      "lang": "en",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-iso-12110-2",
+      "url": "https://www.iso.org/standard/54713.html",
+      "label": "ISO 12110-2:2013 個別規格ページ",
+      "lang": "en",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-iso-22407",
+      "url": "https://www.iso.org/standard/73126.html",
+      "label": "ISO 22407:2021 個別規格ページ",
+      "lang": "en",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-iso-23296",
+      "url": "https://www.iso.org/standard/85732.html",
+      "label": "ISO 23296:2025 個別規格ページ",
+      "lang": "en",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-astm-d7791",
+      "url": "https://store.astm.org/d7791-22.html",
+      "label": "ASTM D7791-22 個別規格ページ",
+      "lang": "en",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-astm-d4482",
+      "url": "https://store.astm.org/d4482-11r21.html",
+      "label": "ASTM D4482-11(2021) 個別規格ページ",
+      "lang": "en",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-astm-f2345",
+      "url": "https://store.astm.org/f2345-21.html",
+      "label": "ASTM F2345-21 個別規格ページ",
+      "lang": "en",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-jis-k6270",
+      "url": "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+K+6270%3A2018",
+      "label": "JIS K 6270:2018 個別規格ページ",
+      "lang": "ja",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-jis-k6394",
+      "url": "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+K+6394%3A2007",
+      "label": "JIS K 6394:2007 個別規格ページ",
+      "lang": "ja",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-jis-r1621",
+      "url": "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+R+1621%3A2008",
+      "label": "JIS R 1621:2008 個別規格ページ",
+      "lang": "ja",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-jis-t0309",
+      "url": "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+T+0309%3A2009",
+      "label": "JIS T 0309:2009 個別規格ページ",
+      "lang": "ja",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-jis-t0310",
+      "url": "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+T+0310%3A2009",
+      "label": "JIS T 0310:2009 個別規格ページ",
+      "lang": "ja",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-astm-e1820",
+      "url": "https://store.astm.org/e1820-25.html",
+      "label": "ASTM E1820-25 個別規格ページ",
+      "lang": "en",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-astm-e399",
+      "url": "https://store.astm.org/e0399-24.html",
+      "label": "ASTM E399-24 個別規格ページ",
+      "lang": "en",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-astm-e1921",
+      "url": "https://store.astm.org/e1921-25a.html",
+      "label": "ASTM E1921-25A 個別規格ページ",
+      "lang": "en",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-iso-12135",
+      "url": "https://www.iso.org/standard/78208.html",
+      "label": "ISO 12135:2021 個別規格ページ",
+      "lang": "en",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-iso-15653",
+      "url": "https://www.iso.org/standard/70865.html",
+      "label": "ISO 15653:2018 個別規格ページ",
+      "lang": "en",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-astm-c1421",
+      "url": "https://store.astm.org/c1421-18r25.html",
+      "label": "ASTM C1421-18(2025) 個別規格ページ",
+      "lang": "en",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-astm-d5045",
+      "url": "https://store.astm.org/d5045-14r22.html",
+      "label": "ASTM D5045-14(2022) 個別規格ページ",
+      "lang": "en",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "official-jis-r1607",
+      "url": "https://webdesk.jsa.or.jp/books/W11M0090/index/?bunsyo_id=JIS+R+1607%3A2015",
+      "label": "JIS R 1607:2015 個別規格ページ",
+      "lang": "ja",
+      "kind": "official",
+      "note": "本目録が一次情報として参照する公式規格ページ。版、適用範囲及び購入・閲覧先を確認します。",
+      "pinned": true
+    },
+    {
+      "id": "jsa-webdesk",
+      "url": "https://webdesk.jsa.or.jp/",
+      "label": "JSA Webdesk（日本規格協会）",
+      "lang": "ja",
+      "kind": "catalog",
+      "note": "JIS・ISO・ASTMを日本語で検索・購入できる日本規格協会の規格販売サイトです。",
+      "pinned": false
+    },
+    {
+      "id": "jsa-jis-search",
+      "url": "https://webdesk.jsa.or.jp/books/W11M0090",
+      "label": "JSA Webdesk：JIS規格詳細検索",
+      "lang": "ja",
+      "kind": "catalog",
+      "note": "規格番号・分野からJISを絞り込み、最新版の発行状況と購入先を日本語で確認できます。",
+      "pinned": false
+    },
+    {
+      "id": "jsa-astm-search",
+      "url": "https://webdesk.jsa.or.jp/books/W11M0310",
+      "label": "JSA Webdesk：ASTM規格詳細検索",
+      "lang": "ja",
+      "kind": "catalog",
+      "note": "ASTM規格を日本語インターフェースで検索できます。国内から和文の案内付きで入手する際の窓口です。",
+      "pinned": false
+    },
+    {
+      "id": "jsa-foreign-search",
+      "url": "https://webdesk.jsa.or.jp/books/W11M0320",
+      "label": "JSA Webdesk：海外規格詳細検索（ISOほか）",
+      "lang": "ja",
+      "kind": "catalog",
+      "note": "ISO・IEC・EN等の海外規格を日本語で検索できます。ISO規格の国内入手経路の確認に使います。",
+      "pinned": false
+    },
+    {
+      "id": "jisc-jis-search",
+      "url": "https://www.jisc.go.jp/app/jis/general/GnrJISSearch.html",
+      "label": "日本産業標準調査会（JISC）：JIS検索",
+      "lang": "ja",
+      "kind": "catalog",
+      "note": "経済産業省所管のJISC公式データベース。規格番号からJISの制定・改正・廃止状況を無料で確認できます。",
+      "pinned": false
+    },
+    {
+      "id": "jisc-jis-reading",
+      "url": "https://www.jisc.go.jp/jis-act/reading.html",
+      "label": "JISC：JISの入手・閲覧方法",
+      "lang": "ja",
+      "kind": "reference",
+      "note": "JIS本文の閲覧手段（JISC閲覧サービス、図書館、購入）を公式に案内する日本語ページです。",
+      "pinned": false
+    },
+    {
+      "id": "jisc-international",
+      "url": "https://www.jisc.go.jp/international/international_standardization.html",
+      "label": "JISC：国際標準化（ISO/IEC）について",
+      "lang": "ja",
+      "kind": "reference",
+      "note": "ISO規格の位置付けと日本の対応体制を日本語で解説する公式ページです。ISO規格とJISの対応関係の背景理解に使います。",
+      "pinned": false
+    },
+    {
+      "id": "jisc-iso-guide",
+      "url": "https://www.jisc.go.jp/international/iso-guide.html",
+      "label": "JISC：ISOの概要",
+      "lang": "ja",
+      "kind": "reference",
+      "note": "ISOの組織・規格開発段階（DIS、FDIS等）を日本語で整理した公式解説です。版の読み方の確認に役立ちます。",
+      "pinned": false
+    },
+    {
+      "id": "astm-site",
+      "url": "https://www.astm.org/",
+      "label": "ASTM International 公式サイト",
+      "lang": "en",
+      "kind": "official",
+      "note": "ASTM規格の発行元。改訂状況、委員会情報、関連規格の一次情報源です。",
+      "pinned": false
+    },
+    {
+      "id": "iso-site",
+      "url": "https://www.iso.org/standards.html",
+      "label": "ISO 公式規格カタログ",
+      "lang": "en",
+      "kind": "official",
+      "note": "ISO規格の発行元カタログ。版、ステージ、置換規格の一次情報を確認できます。",
+      "pinned": false
+    },
+    {
+      "id": "jwes-fatigue-knowledge",
+      "url": "https://www-it.jwes.or.jp/fatigue_knowledge/introduction.jsp",
+      "label": "日本溶接協会：疲労ナレッジプラットフォーム",
+      "lang": "ja",
+      "kind": "reference",
+      "note": "疲労強度・疲労設計のQ&Aと講演資料を日本語で公開する国内の実務向け解説資料集です。",
+      "pinned": false
+    },
+    {
+      "id": "jwes-fatigue-db",
+      "url": "https://www-it.jwes.or.jp/fatigue_db/",
+      "label": "日本溶接協会：多軸応力下の疲労および延性破壊データベース",
+      "lang": "ja",
+      "kind": "reference",
+      "note": "多軸応力下の疲労・延性破壊試験データを日本語で公開するデータベースです。",
+      "pinned": false
+    },
+    {
+      "id": "nims-fds",
+      "url": "https://fds.nims.go.jp/",
+      "label": "NIMS：疲労データシート（FDS）",
+      "lang": "ja",
+      "kind": "reference",
+      "note": "物質・材料研究機構が公開する国内材料の疲労試験データシート。S–N線図の実データ参照に使います。",
+      "pinned": false
+    },
+    {
+      "id": "nims-dice",
+      "url": "https://dice.nims.go.jp/",
+      "label": "NIMS：材料データプラットフォーム DICE",
+      "lang": "ja",
+      "kind": "reference",
+      "note": "NIMSの材料データベース群の入口。疲労・クリープ・強度データへの日本語での到達点です。",
+      "pinned": false
+    },
+    {
+      "id": "jsms-fatigue",
+      "url": "https://fatigue.jsms.jp/",
+      "label": "日本材料学会：疲労部門委員会",
+      "lang": "ja",
+      "kind": "reference",
+      "note": "国内の疲労研究コミュニティ。標準化動向、シンポジウム、講習会情報を日本語で発信しています。",
+      "pinned": false
+    },
+    {
+      "id": "jsms-safety",
+      "url": "https://safety.jsms.jp/",
+      "label": "日本材料学会：強度設計・安全性評価部門委員会",
+      "lang": "ja",
+      "kind": "reference",
+      "note": "破壊力学に基づく強度設計・健全性評価を扱う国内部門委員会の日本語サイトです。",
+      "pinned": false
+    },
+    {
+      "id": "jstage",
+      "url": "https://www.jstage.jst.go.jp/browse/-char/ja",
+      "label": "J-STAGE（科学技術情報発信・流通総合システム）",
+      "lang": "ja",
+      "kind": "reference",
+      "note": "科学技術振興機構が運営する和文論文プラットフォーム。試験法の解説記事・適用事例の検索に使います。",
+      "pinned": false
+    },
+    {
+      "id": "srij",
+      "url": "https://www.srij.or.jp/",
+      "label": "日本ゴム協会",
+      "lang": "ja",
+      "kind": "reference",
+      "note": "ゴム・エラストマーの試験法と材料特性に関する国内学会。ゴム疲労・動的特性の日本語情報源です。",
+      "pinned": false
+    },
+    {
+      "id": "ceramic-society",
+      "url": "https://www.ceramic.or.jp/",
+      "label": "日本セラミックス協会",
+      "lang": "ja",
+      "kind": "reference",
+      "note": "ファインセラミックスの強度・破壊靭性評価に関する国内学会の日本語サイトです。",
+      "pinned": false
+    },
+    {
+      "id": "ref-nist-fatigue",
+      "url": "https://www.nist.gov/mml/acmd/fatigue-and-fracture-group",
+      "label": "NIST Fatigue and Fracture Group",
+      "lang": "en",
+      "kind": "reference",
+      "note": "疲労・破壊の試験・研究に関する公的研究機関の解説。",
+      "pinned": false
+    },
+    {
+      "id": "ref-nasa-tmf",
+      "url": "https://ntrs.nasa.gov/citations/19880005881",
+      "label": "NASA Technical Reports Server：熱機械疲労寿命予測",
+      "lang": "en",
+      "kind": "reference",
+      "note": "熱機械疲労を扱う公開技術資料。",
+      "pinned": false
+    },
+    {
+      "id": "ref-ta-dma",
+      "url": "https://www.tainstruments.com/applications-notes/introduction-to-dynamic-mechanical-analysis-and-its-application-to-testing-of-polymer-solids/",
+      "label": "TA Instruments：DMA introduction",
+      "lang": "en",
+      "kind": "reference",
+      "note": "動的機械分析の公開技術解説。",
+      "pinned": false
+    }
+  ]
+}

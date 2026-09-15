@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "description": "scripts/check-links.mjs が月次で自動更新するリンク死活監視の結果です。手で編集せず、pnpm check:links で再生成してください。",
+  "lastCompletedAt": null,
+  "latestRun": null,
+  "links": {}
+}
