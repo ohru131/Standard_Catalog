@@ -21,9 +21,13 @@ export type RegisteredLink = {
 
 export type LinkHealthRecord = {
   url: string;
+  label?: string;
+  pinned?: boolean;
   checkedAt?: string;
   lastOkAt?: string | null;
   httpStatus?: number | null;
+  checkMethod?: string;
+  finalUrl?: string;
   ok?: boolean;
   consecutiveFailures?: number;
   hidden?: boolean;
@@ -33,7 +37,7 @@ export type LinkHealthRecord = {
 export type LinkHealth = {
   schemaVersion: number;
   lastCompletedAt: string | null;
-  latestRun: { checked: number; ok: number; broken: number; hidden: number } | null;
+  latestRun: { checked: number; ok: number; broken: number; hidden: number; failThreshold?: number } | null;
   links: Record<string, LinkHealthRecord>;
 };
 

@@ -14,7 +14,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const registryPath = path.join(root, "client", "src", "data", "links.json");
 const healthPath = path.join(root, "client", "src", "data", "link-health.json");
 
-const requestTimeoutMs = Number.parseInt(process.env.LINK_CHECK_TIMEOUT_MS ?? "25000", 10);
+const requestTimeoutMs = clampInt(process.env.LINK_CHECK_TIMEOUT_MS, 25_000, 1_000, 120_000);
 const attemptsPerLink = clampInt(process.env.LINK_CHECK_ATTEMPTS, 3, 1, 5);
 const concurrency = clampInt(process.env.LINK_CHECK_CONCURRENCY, 4, 1, 8);
 const userAgent =
