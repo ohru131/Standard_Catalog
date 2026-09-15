@@ -60,15 +60,19 @@ export type ResolvedLink = RegisteredLink & { needsReview: boolean; lastCheckedA
 export const linkPolicy = registry.policy;
 export const linkHealthSummary = { lastCompletedAt: linkHealth.lastCompletedAt, latestRun: linkHealth.latestRun };
 
+/** リンクIDを1件解決します。非表示の補助リンクには null を返します。 */
 function resolve(id: string): ResolvedLink | null {
   const link = linksById.get(id);
   if (!link) return null;
-  const health = linkHealth.links[id];
+  const stored = linkHealth.links[id];
+  // レジストリでURLを差し替えた場合、古いURLに対する監視結果は引き継ぎません。
+  const health = stored?.url === link.url ? stored : undefined;
   // 監視で継続的に到達できなくなった補助リンクは、目録の導線から自動的に外します。
   if (health?.hidden && !link.pinned) return null;
   return { ...link, needsReview: Boolean(health?.hidden), lastCheckedAt: health?.checkedAt };
 }
 
+/** 同一URLのリンクを1件に畳み込みます（規格別・体系別・領域別の割り当てが重なるため）。 */
 function dedupe(links: ResolvedLink[]) {
   return Array.from(new Map(links.map((link) => [link.url, link])).values());
 }
@@ -99,6 +103,7 @@ export function getRelatedLinks(input: { id: string; authority: string; category
   return dedupe(resolved).sort((a, b) => langRank(a) - langRank(b) || kindRank(a) - kindRank(b));
 }
 
+/** リンク確認日時を、目録の他の日付表示と同じ日本語書式に整えます。 */
 export function formatLinkCheckDate(value?: string | null) {
   if (!value) return "未確認";
   const date = new Date(value);

@@ -21,6 +21,7 @@ const userAgent =
   process.env.LINK_CHECK_USER_AGENT ??
   "Mozilla/5.0 (compatible; Fatigue-Index-Link-Monitor/1.0; +https://github.com/ohru131/Standard_Catalog)";
 
+/** 環境変数由来の整数設定を検証します。数値でない場合は既定値、範囲外は上下限へ丸めます。 */
 function clampInt(value, fallback, min, max) {
   const parsed = Number.parseInt(value ?? "", 10);
   if (!Number.isFinite(parsed)) return fallback;
@@ -29,6 +30,7 @@ function clampInt(value, fallback, min, max) {
 
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+/** タイムアウト付きで1リクエストを送ります。リダイレクトは追跡します。 */
 async function request(url, method) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), requestTimeoutMs);
@@ -48,15 +50,20 @@ async function request(url, method) {
   }
 }
 
-/** HEADを拒否するサイトが多いため、2xx以外はGETで確認し直します。 */
+/**
+ * 1つのURLの到達性を判定します。HEADを拒否するサイトが多いため、2xx以外はGETで確認し直します。
+ * GETのレスポンスボディは読まないため、接続が保持されないよう破棄してから次へ進みます。
+ */
 async function probe(url) {
   let lastError = "";
   for (let attempt = 1; attempt <= attemptsPerLink; attempt += 1) {
     for (const method of ["HEAD", "GET"]) {
       try {
         const response = await request(url, method);
-        if (response.ok) return { ok: true, httpStatus: response.status, finalUrl: response.url, method };
-        lastError = `HTTP ${response.status}`;
+        const result = { ok: response.ok, httpStatus: response.status, finalUrl: response.url, method };
+        await response.body?.cancel().catch(() => {});
+        if (result.ok) return result;
+        lastError = `HTTP ${result.httpStatus}`;
       } catch (error) {
         lastError = error instanceof Error ? error.message : String(error);
       }
@@ -90,7 +97,9 @@ const newlyHidden = [];
 const recovered = [];
 
 for (const { link, result } of results) {
-  const previous = health.links[link.id] ?? {};
+  // レジストリでURLを差し替えたリンクは、古いURLの失敗回数・非表示状態を引き継ぎません。
+  const stored = health.links[link.id];
+  const previous = stored?.url === link.url ? stored : {};
   if (result.ok) {
     ok += 1;
     if (previous.hidden) recovered.push({ id: link.id, label: link.label, url: link.url });
